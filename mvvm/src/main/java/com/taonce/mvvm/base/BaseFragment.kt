@@ -51,7 +51,7 @@ abstract class BaseFragment<VDB : ViewDataBinding> : Fragment(), CoroutineScope 
         failed: (permissions: Array<String>) -> Unit
     ) {
         if (activity != null && activity is BaseActivity<*>) {
-            activity.requestPermissions(permissions, success, failed)
+            (activity as BaseActivity<*>).requestPermissions(permissions, success, failed)
         }
     }
 }
