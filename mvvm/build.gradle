@@ -61,4 +61,10 @@ dependencies {
     def coroutines_version = "1.3.0-RC"
     api "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutines_version"
     api "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutines_version"
+
+    // retrofit
+    def retrofit_version = "2.6.1"
+    api "com.squareup.retrofit2:retrofit:$retrofit_version"
+    api "com.squareup.retrofit2:converter-gson:$retrofit_version"
+    api 'com.parkingwang:okhttp3-loginterceptor:latest.integration'
 }
