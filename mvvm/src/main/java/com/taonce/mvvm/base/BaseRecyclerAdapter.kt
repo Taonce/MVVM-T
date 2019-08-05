@@ -38,6 +38,7 @@ abstract class BaseRecyclerAdapter<T>(
         holder: BaseRecyclerHolder<ViewDataBinding>,
         position: Int
     ) {
+        setVariable(position, holder.dataBinding)
         holder.dataBinding.apply {
             executePendingBindings()
             root.apply {
@@ -50,7 +51,6 @@ abstract class BaseRecyclerAdapter<T>(
                 }
             }
         }
-        setVariable(position, holder.dataBinding)
     }
 
     override fun getItemCount(): Int = mData?.size ?: 0
@@ -76,11 +76,11 @@ abstract class BaseRecyclerAdapter<T>(
             }
     }
 
-    fun setOnClickListener(listener: OnClickListener) {
+    fun setOnClickListener(listener: OnClickListener?) {
         mClickListener = listener
     }
 
-    fun setOnLongClickListener(listener: OnLongClickListener) {
+    fun setOnLongClickListener(listener: OnLongClickListener?) {
         mLongClickListener = listener
     }
 }

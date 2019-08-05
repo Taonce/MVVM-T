@@ -1,9 +1,10 @@
 package com.taonce.mvvm.binding
 
-import android.view.View
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.taonce.mvvm.base.BaseRecyclerAdapter
+import com.taonce.mvvm.base.OnItemClickListener
+import com.taonce.mvvm.base.OnItemLongClickListener
 
 
 /**
@@ -13,16 +14,9 @@ import com.taonce.mvvm.base.BaseRecyclerAdapter
  * Desc: DataBinding绑定RecyclerView的点击和长按事件
  */
 
-interface OnClickListener {
-    fun click(position: Int, view: View)
-}
-
-interface OnLongClickListener {
-    fun longClick(position: Int, view: View)
-}
-
-@BindingAdapter("clickListener")
-fun BindClickListener(rcv: RecyclerView, listener: OnClickListener) {
+@BindingAdapter("bind:itemClickListener")
+fun bindClickListener(rcv: RecyclerView, listener: OnItemClickListener?) {
+    rcv.adapter ?: return
     rcv.adapter?.let {
         if (it is BaseRecyclerAdapter<*>) {
             it.setOnClickListener(listener)
@@ -30,8 +24,8 @@ fun BindClickListener(rcv: RecyclerView, listener: OnClickListener) {
     }
 }
 
-@BindingAdapter("longClickListener")
-fun BindLongClickListener(rcv: RecyclerView, listener: OnLongClickListener) {
+@BindingAdapter("bind:itemLongClickListener")
+fun bindLongClickListener(rcv: RecyclerView, listener: OnItemLongClickListener?) {
     rcv.adapter?.let {
         if (it is BaseRecyclerAdapter<*>) {
             it.setOnLongClickListener(listener)
