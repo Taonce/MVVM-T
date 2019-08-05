@@ -112,29 +112,28 @@ fun Context.iosDialog(
     enterText: CharSequence? = null,
     enterListener: (() -> Unit)? = null,
     cancelListener: (() -> Unit)? = null
-) {
-    LayoutInflater.from(this).inflate(R.layout.dialog_common_ios, null).apply iosView@{
-        findViewById<TextView>(R.id.dialog_title).text = title
-        findViewById<TextView>(R.id.dialog_msg).text = message
-        AlertDialog.Builder(this@iosDialog).apply {
-            setView(this@iosView)
-        }.create().let { dialog ->
-            findViewById<Button>(R.id.dialog_enter).apply {
-                enterText?.let { text = it }
-                setOnClickListener {
-                    enterListener?.invoke()
-                    dialog.dismiss()
-                }
+): AlertDialog = LayoutInflater.from(this).inflate(R.layout.dialog_common_ios, null).run iosView@{
+    findViewById<TextView>(R.id.dialog_title).text = title
+    findViewById<TextView>(R.id.dialog_msg).text = message
+    AlertDialog.Builder(this@iosDialog).apply {
+        setView(this@iosView)
+    }.create().let { dialog ->
+        findViewById<Button>(R.id.dialog_enter).apply {
+            enterText?.let { text = it }
+            setOnClickListener {
+                enterListener?.invoke()
+                dialog.dismiss()
             }
-            findViewById<Button>(R.id.dialog_cancel).apply {
-                cancelText?.let { text = it }
-                setOnClickListener {
-                    cancelListener?.invoke()
-                    dialog.dismiss()
-                }
-            }
-            dialog.show()
         }
+        findViewById<Button>(R.id.dialog_cancel).apply {
+            cancelText?.let { text = it }
+            setOnClickListener {
+                cancelListener?.invoke()
+                dialog.dismiss()
+            }
+        }
+        dialog.show()
+        dialog
     }
 }
 
@@ -146,28 +145,27 @@ fun Context.iosDialog(
     @StringRes enterText: Int? = null,
     enterListener: (() -> Unit)? = null,
     cancelListener: (() -> Unit)? = null
-) {
-    LayoutInflater.from(this).inflate(R.layout.dialog_common_ios, null).apply iosView@{
-        findViewById<TextView>(R.id.dialog_title).text = resources.getString(title)
-        findViewById<TextView>(R.id.dialog_msg).text = resources.getString(message)
-        AlertDialog.Builder(this@iosDialog).apply {
-            setView(this@iosView)
-        }.create().let { dialog ->
-            findViewById<Button>(R.id.dialog_enter).apply {
-                enterText?.let { text = resources.getString(it) }
-                setOnClickListener {
-                    enterListener?.invoke()
-                    dialog.dismiss()
-                }
+): AlertDialog = LayoutInflater.from(this).inflate(R.layout.dialog_common_ios, null).run iosView@{
+    findViewById<TextView>(R.id.dialog_title).text = resources.getString(title)
+    findViewById<TextView>(R.id.dialog_msg).text = resources.getString(message)
+    AlertDialog.Builder(this@iosDialog).apply {
+        setView(this@iosView)
+    }.create().let { dialog ->
+        findViewById<Button>(R.id.dialog_enter).apply {
+            enterText?.let { text = resources.getString(it) }
+            setOnClickListener {
+                enterListener?.invoke()
+                dialog.dismiss()
             }
-            findViewById<Button>(R.id.dialog_cancel).apply {
-                cancelText?.let { text = resources.getString(it) }
-                setOnClickListener {
-                    cancelListener?.invoke()
-                    dialog.dismiss()
-                }
-            }
-            dialog.show()
         }
+        findViewById<Button>(R.id.dialog_cancel).apply {
+            cancelText?.let { text = resources.getString(it) }
+            setOnClickListener {
+                cancelListener?.invoke()
+                dialog.dismiss()
+            }
+        }
+        dialog.show()
+        dialog
     }
 }
