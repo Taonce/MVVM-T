@@ -17,4 +17,5 @@ private val loggingExceptionHandler: CoroutineExceptionHandler =
 
 private val handlerContext: CoroutineContext = loggingExceptionHandler
 
-fun CoroutineScope.safeLaunch(block: suspend () -> Unit): Job = launch(handlerContext) { block() }
+fun CoroutineScope.safeLaunch(block: suspend () -> Unit): Job =
+    launch(handlerContext) { block() }

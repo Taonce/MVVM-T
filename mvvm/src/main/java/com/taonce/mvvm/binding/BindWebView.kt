@@ -12,7 +12,7 @@ import androidx.databinding.BindingAdapter
  */
 
 @BindingAdapter("bind:url")
-fun BindUrl(webView: WebView, url: String? = null) {
+fun bindUrl(webView: WebView, url: String? = null) {
     url ?: return
     if (url.isNotEmpty()) webView.loadUrl(url)
 }
