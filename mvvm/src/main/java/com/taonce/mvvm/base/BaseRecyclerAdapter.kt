@@ -5,8 +5,6 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.recyclerview.widget.RecyclerView
-import com.taonce.mvvm.binding.OnClickListener
-import com.taonce.mvvm.binding.OnLongClickListener
 
 
 /**
@@ -19,8 +17,8 @@ abstract class BaseRecyclerAdapter<T>(
     private val mData: MutableList<T>? = null
 ) : RecyclerView.Adapter<BaseRecyclerHolder<ViewDataBinding>>() {
 
-    private var mClickListener: OnClickListener? = null
-    private var mLongClickListener: OnLongClickListener? = null
+    private var mClickListener: OnItemClickListener? = null
+    private var mLongClickListener: OnItemLongClickListener? = null
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
@@ -46,7 +44,7 @@ abstract class BaseRecyclerAdapter<T>(
                     mClickListener?.click(position, it)
                 }
                 setOnLongClickListener {
-                    mLongClickListener?.longClick(position, it)
+                    mLongClickListener?.click(position, it)
                     true
                 }
             }
@@ -76,11 +74,11 @@ abstract class BaseRecyclerAdapter<T>(
             }
     }
 
-    fun setOnClickListener(listener: OnClickListener?) {
+    fun setOnClickListener(listener: OnItemClickListener?) {
         mClickListener = listener
     }
 
-    fun setOnLongClickListener(listener: OnLongClickListener?) {
+    fun setOnLongClickListener(listener: OnItemLongClickListener?) {
         mLongClickListener = listener
     }
 }

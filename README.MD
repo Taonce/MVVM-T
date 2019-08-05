@@ -1,0 +1,1 @@
+LifeCycle+DataBinding+LiveData+ViewModel+Coroutines+KTX = MVVM-T
