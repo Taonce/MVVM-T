@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">mvvm</string>
+
+    <string name="cancel">cancel</string>
+
+    <string name="enter">enter</string>
 </resources>
