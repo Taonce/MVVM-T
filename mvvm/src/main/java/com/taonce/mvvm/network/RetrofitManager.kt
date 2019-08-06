@@ -12,19 +12,23 @@ class RetrofitManager {
         val getApi: ApiServices by lazy(mode = LazyThreadSafetyMode.SYNCHRONIZED) {
             RetrofitManager().getRetrofit().create(ApiServices::class.java)
         }
+        // 配置base_url
+        const val BASE_URL = "https://gank.io/api/"
     }
 
-    private lateinit var mRetrofit: Retrofit
+    private var mRetrofit: Retrofit? = null
     private val mOkHttpClient by lazy { OkHttpManager.mInstance.getHttpClient() }
 
     // 配置Retrofit
     private fun getRetrofit(): Retrofit {
-        mRetrofit = Retrofit.Builder()
-            .baseUrl("https://gank.io/api/")
-            .addConverterFactory(GsonConverterFactory.create())
-            .client(mOkHttpClient)
-            .build()
-        return mRetrofit
+        if (mRetrofit == null) {
+            mRetrofit = Retrofit.Builder()
+                .baseUrl(BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create())
+                .client(mOkHttpClient)
+                .build()
+        }
+        return mRetrofit!!
     }
 
 }

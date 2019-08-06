@@ -18,7 +18,7 @@ import com.taonce.mvvm.base.OnItemLongClickListener
 fun bindClickListener(rcv: RecyclerView, listener: OnItemClickListener?) {
     rcv.adapter ?: return
     rcv.adapter?.let {
-        if (it is BaseRecyclerAdapter<*>) {
+        if (it is BaseRecyclerAdapter<*, *>) {
             it.setOnClickListener(listener)
         }
     }
@@ -27,7 +27,7 @@ fun bindClickListener(rcv: RecyclerView, listener: OnItemClickListener?) {
 @BindingAdapter("bind:itemLongClickListener")
 fun bindLongClickListener(rcv: RecyclerView, listener: OnItemLongClickListener?) {
     rcv.adapter?.let {
-        if (it is BaseRecyclerAdapter<*>) {
+        if (it is BaseRecyclerAdapter<*, *>) {
             it.setOnLongClickListener(listener)
         }
     }

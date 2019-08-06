@@ -7,15 +7,13 @@ import retrofit2.http.Path
  * @author Taonce.
  * @description
  */
-interface ApiServices{
+interface ApiServices {
     /**
      * 根据category获取Android、ios等数据
      * category：类型
      * count：分页的一页数据
      * page：第几页
      */
-    @GET("search/query/listview/category/{category}/count/{count}/page/{page}")
-    suspend fun getCategoryData(@Path("category") category: String,
-                        @Path("count") count: Int,
-                        @Path("page") page: Int): String
+    @GET("search/query/listview/category/android/count/10/page/1")
+    suspend fun getCategoryData(): String
 }

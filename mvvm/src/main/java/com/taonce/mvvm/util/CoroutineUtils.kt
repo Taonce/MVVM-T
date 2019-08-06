@@ -17,5 +17,8 @@ private val loggingExceptionHandler: CoroutineExceptionHandler =
 
 private val handlerContext: CoroutineContext = loggingExceptionHandler
 
-fun CoroutineScope.safeLaunch(block: suspend () -> Unit): Job =
-    launch(handlerContext) { block() }
+/**
+ * 可自定义协程上下文环境，也可以使用默认的 [handlerContext]
+ */
+fun CoroutineScope.safeLaunch(coroutineContext: CoroutineContext? = null, block: suspend () -> Unit): Job =
+    launch(coroutineContext?.let { it + handlerContext } ?: handlerContext) { block() }

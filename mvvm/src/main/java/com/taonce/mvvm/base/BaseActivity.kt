@@ -38,6 +38,7 @@ abstract class BaseActivity<VDB : ViewDataBinding> : AppCompatActivity(), Corout
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         mDataBinding.lifecycleOwner = this
+        work(savedInstanceState)
     }
 
     abstract fun getLayoutId(): Int

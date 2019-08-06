@@ -13,9 +13,9 @@ import androidx.recyclerview.widget.RecyclerView
  * Project: MVVM-T
  * Desc: [RecyclerView]的Adapter封装，结合的是DataBinding
  */
-abstract class BaseRecyclerAdapter<T>(
+abstract class BaseRecyclerAdapter<VDB : ViewDataBinding, T>(
     private val mData: MutableList<T>? = null
-) : RecyclerView.Adapter<BaseRecyclerHolder<ViewDataBinding>>() {
+) : RecyclerView.Adapter<BaseRecyclerHolder<VDB>>() {
 
     private var mClickListener: OnItemClickListener? = null
     private var mLongClickListener: OnItemLongClickListener? = null
@@ -23,7 +23,7 @@ abstract class BaseRecyclerAdapter<T>(
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
-    ): BaseRecyclerHolder<ViewDataBinding> = BaseRecyclerHolder(
+    ): BaseRecyclerHolder<VDB> = BaseRecyclerHolder(
         DataBindingUtil.inflate(
             LayoutInflater.from(parent.context),
             getLayoutId(),
@@ -33,7 +33,7 @@ abstract class BaseRecyclerAdapter<T>(
     )
 
     override fun onBindViewHolder(
-        holder: BaseRecyclerHolder<ViewDataBinding>,
+        holder: BaseRecyclerHolder<VDB>,
         position: Int
     ) {
         setVariable(position, holder.dataBinding)
