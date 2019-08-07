@@ -40,5 +40,6 @@ abstract class BaseDialogFragment<VDB : ViewDataBinding> :
         super.onDestroy()
         // 避免协程的内存泄漏
         cancel()
+        mDataBinding.unbind()
     }
 }

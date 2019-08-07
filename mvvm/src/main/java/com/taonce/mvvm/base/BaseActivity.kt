@@ -47,8 +47,10 @@ abstract class BaseActivity<VDB : ViewDataBinding> : AppCompatActivity(), Corout
 
     override fun onDestroy() {
         super.onDestroy()
-        // 取消所有的协程
+        // 取消MainScope下的所有的协程
         cancel()
+        // 移除DB的监听
+        mDataBinding.unbind()
     }
 
     /**

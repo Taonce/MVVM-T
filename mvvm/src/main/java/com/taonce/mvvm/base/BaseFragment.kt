@@ -11,6 +11,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProviders
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.cancel
 
 /**
  * @author: Taonce
@@ -53,6 +54,12 @@ abstract class BaseFragment<VDB : ViewDataBinding> : Fragment(), CoroutineScope 
         if (activity != null && activity is BaseActivity<*>) {
             (activity as BaseActivity<*>).requestPermissions(permissions, success, failed)
         }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        cancel()
+        mDataBinding.unbind()
     }
 }
 

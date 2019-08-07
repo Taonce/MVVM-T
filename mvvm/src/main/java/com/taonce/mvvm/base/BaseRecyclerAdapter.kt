@@ -51,6 +51,11 @@ abstract class BaseRecyclerAdapter<VDB : ViewDataBinding, T>(
         }
     }
 
+    /**
+     * 获取item数据，有可能为空
+     */
+    fun getItemData(position: Int) = mData?.get(position)
+
     override fun getItemCount(): Int = mData?.size ?: 0
 
     abstract fun getLayoutId(): Int

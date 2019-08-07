@@ -15,7 +15,10 @@ import com.taonce.mvvm.base.OnTextChanged
  * Project: MVVM-T
  * Desc: [EditText]的文本变化监听，这样的话不必每次重写三个方法，用哪个就绑定哪个
  */
-@BindingAdapter("bind:after","bind:before","bind:changed")
+@BindingAdapter(
+    value = ["bind:after", "bind:before", "bind:changed"],
+    requireAll = false
+)
 fun bindTextChanged(
     editText: EditText,
     after: AfterTextChanged? = null,

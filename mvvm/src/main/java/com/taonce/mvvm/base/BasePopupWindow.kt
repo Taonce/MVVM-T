@@ -46,5 +46,6 @@ abstract class BasePopupWindow<VDB : ViewDataBinding>(
     override fun dismiss() {
         super.dismiss()
         cancel()
+        mDataBinding.unbind()
     }
 }
