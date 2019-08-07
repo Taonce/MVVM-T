@@ -4,7 +4,9 @@
 #### 使用
 
 `git clone https://github.com/Taonce/MVVM-T`
+
 剥离出**mvvm**模块即可，可以根据自己的需求剔除无关封装类和工具类，以此来缩减此Module的体积
+
 以Module的形式依赖到自己的项目中，同时在项目的**build.gradle**中添加以下代码
 
 ```
