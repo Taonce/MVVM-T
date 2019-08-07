@@ -58,7 +58,12 @@ abstract class BaseRecyclerAdapter<VDB : ViewDataBinding, T>(
     /**
      * 处理界面
      */
-    abstract fun setVariable(position: Int, dataBinding: ViewDataBinding)
+    abstract fun setVariable(position: Int, dataBinding: VDB)
+
+    /**
+     * 可结合DiffUtil使用
+     */
+    abstract fun update(newData: MutableList<T>)
 
     /**
      * 移除指定的item

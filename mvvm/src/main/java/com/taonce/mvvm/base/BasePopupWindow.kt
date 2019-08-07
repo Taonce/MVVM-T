@@ -1,12 +1,17 @@
 package com.taonce.mvvm.base
 
 import android.content.Context
+import android.graphics.drawable.BitmapDrawable
+import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.PopupWindow
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import com.taonce.mvvm.R
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.cancel
 
 /**
  * @author Taonce.
@@ -17,8 +22,9 @@ abstract class BasePopupWindow<VDB : ViewDataBinding>(
     context: Context,
     animStyle: Int = R.style.PopWindowAnimation,
     width: Int = ViewGroup.LayoutParams.MATCH_PARENT,
-    height: Int = ViewGroup.LayoutParams.WRAP_CONTENT
-) : PopupWindow(context) {
+    height: Int = ViewGroup.LayoutParams.WRAP_CONTENT,
+    gravity: Int = Gravity.BOTTOM
+) : PopupWindow(context), CoroutineScope by MainScope() {
 
     protected val mDataBinding: VDB
 
@@ -28,10 +34,17 @@ abstract class BasePopupWindow<VDB : ViewDataBinding>(
         animationStyle = animStyle
         setWidth(width)
         setHeight(height)
+        setBackgroundDrawable(BitmapDrawable(context.resources))
+        showAtLocation(mDataBinding.root, gravity, 0, 0)
         work()
     }
 
     abstract fun getLayoutId(): Int
 
     abstract fun work()
+
+    override fun dismiss() {
+        super.dismiss()
+        cancel()
+    }
 }

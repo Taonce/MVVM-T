@@ -13,7 +13,7 @@ class RetrofitManager {
             RetrofitManager().getRetrofit().create(ApiServices::class.java)
         }
         // 配置base_url
-        const val BASE_URL = "https://gank.io/api/"
+        const val BASE_URL = ""
     }
 
     private var mRetrofit: Retrofit? = null

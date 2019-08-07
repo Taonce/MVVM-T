@@ -1,9 +1,9 @@
 package com.taonce.mvvmt
 
+import android.content.Context
 import android.os.Bundle
-import android.widget.BaseAdapter
-import androidx.databinding.ViewDataBinding
 import com.taonce.mvvm.base.BaseActivity
+import com.taonce.mvvm.base.BasePopupWindow
 import com.taonce.mvvm.base.BaseRecyclerAdapter
 import com.taonce.mvvm.network.RetrofitManager
 import com.taonce.mvvm.util.iosDialog
@@ -26,11 +26,12 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
             mData.add("$i")
         }
         mDataBinding.adapter = MainAdapter(mData)
-        mDataBinding.setItemClickListener { position, _ -> showDebug("click item data is ${mData[position]}") }
-        mDataBinding.setItemLongClickListener { position, _ -> showDebug("long click item data is ${mData[position]}")}
+        mDataBinding.setItemClickListener { _, _ -> MainPopupWindow(this) }
+        mDataBinding.setItemLongClickListener { position, _ -> showDebug("long click item data is ${mData[position]}") }
 
         // network + coroutine
-        safeLaunch(Dispatchers.IO) { RetrofitManager.getApi.getCategoryData() }
+        safeLaunch(Dispatchers.IO) { RetrofitManager.getApi }
+
     }
 }
 
@@ -38,6 +39,16 @@ class MainAdapter(mData: MutableList<String>) :
     BaseRecyclerAdapter<RecyclerItemMainBinding, String>(mData) {
     override fun getLayoutId(): Int = R.layout.recycler_item_main
 
-    override fun setVariable(position: Int, dataBinding: ViewDataBinding) {
+    override fun setVariable(position: Int, dataBinding: RecyclerItemMainBinding) {
+    }
+
+    override fun update(newData: MutableList<String>) {
+    }
+}
+
+class MainPopupWindow(context: Context) : BasePopupWindow<ActivityMainBinding>(context) {
+    override fun getLayoutId(): Int = R.layout.recycler_item_main
+
+    override fun work() {
     }
 }

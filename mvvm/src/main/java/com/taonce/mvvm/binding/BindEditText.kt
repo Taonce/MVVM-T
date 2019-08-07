@@ -13,7 +13,7 @@ import com.taonce.mvvm.base.OnTextChanged
  * Author: Taonce
  * Date: 2019/8/5
  * Project: MVVM-T
- * Desc: [EditText]的文本变化监听，这样的话不必每次重写三个方法，用哪个就重写哪个
+ * Desc: [EditText]的文本变化监听，这样的话不必每次重写三个方法，用哪个就绑定哪个
  */
 @BindingAdapter("bind:after","bind:before","bind:changed")
 fun bindTextChanged(
