@@ -13,8 +13,8 @@ import kotlinx.coroutines.Dispatchers
 
 class MainActivity : BaseListActivity<ActivityMainBinding, MainAdapter>() {
 
+    private val mData = mutableListOf<String>()
     override fun getAdapter(): MainAdapter {
-        val mData = mutableListOf<String>()
         for (i in 1..50) {
             mData.add("$i")
         }
@@ -39,6 +39,12 @@ class MainActivity : BaseListActivity<ActivityMainBinding, MainAdapter>() {
         mDataBinding.adapter = mAdapter
         mDataBinding.itemClickListener = mClickListener
         mDataBinding.itemLongClickListener = mLongClickListener
+        mDataBinding.setLoadMore {
+            mData.addAll(
+                mutableListOf("a", "a", "a", "a", "a", "a", "a", "a", "a", "a")
+            )
+            mAdapter.notifyItemRangeInserted(mAdapter.itemCount, 10)
+        }
 
         // network + coroutine
         safeLaunch(Dispatchers.IO) { RetrofitManager.getApi }

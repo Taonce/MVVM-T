@@ -17,6 +17,8 @@ android {
 }
 ```
 
+**[MainActivity](https://github.com/Taonce/MVVM-T/blob/master/app/src/main/java/com/taonce/mvvmt/MainActivity.kt)类中包含了许多示例，阅读之后可轻松掌握项目的精髓!**
+
 #### 基类中封装
 * BaseActivity
 * BaseFragment
@@ -28,7 +30,7 @@ android {
 * BaseListFragment
 
 #### `BindingAdapter` 中封装
-* `RecyclerView` 的点击事件和长按事件
+* `RecyclerView` 的点击事件和长按事件,新增监听滑动到底部的事件,可用于滑到底部自动加载
 * `EditText` 的文本改变事件
 * `WebView` 的加载 `url` 事件
 * `ViewPager` 的 `transform` 属性

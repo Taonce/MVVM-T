@@ -2,6 +2,7 @@ package com.taonce.mvvm.base
 
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.ViewDataBinding
+import androidx.recyclerview.widget.RecyclerView
 
 
 /**
@@ -23,6 +24,5 @@ abstract class BaseListActivity<VDB : ViewDataBinding, A : BaseRecyclerAdapter<*
     abstract fun getItemClickListener(): OnItemClickListener?
 
     abstract fun getItemLongClickListener(): OnItemLongClickListener?
-
 }
 
