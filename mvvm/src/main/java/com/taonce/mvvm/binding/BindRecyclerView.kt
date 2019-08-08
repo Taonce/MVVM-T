@@ -9,6 +9,8 @@ import com.taonce.mvvm.base.BaseRecyclerAdapter
 import com.taonce.mvvm.base.OnItemClickListener
 import com.taonce.mvvm.base.OnItemLongClickListener
 import com.taonce.mvvm.base.OnLoadMoreListener
+import com.taonce.mvvm.base.BaseListActivity
+import com.taonce.mvvm.base.BaseListFragment
 
 
 /**
@@ -18,6 +20,9 @@ import com.taonce.mvvm.base.OnLoadMoreListener
  * Desc: DataBinding绑定RecyclerView的点击、长按事件和加载更多事件
  */
 
+/**
+ * 继承了[BaseListFragment]或者[BaseListActivity]之后，就无需用db绑定事件了
+ */
 @BindingAdapter("bind:itemClickListener")
 fun bindClickListener(rcv: RecyclerView, listener: OnItemClickListener?) {
     rcv.adapter ?: return

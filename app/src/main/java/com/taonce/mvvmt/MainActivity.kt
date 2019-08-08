@@ -24,10 +24,7 @@ class MainActivity : BaseListActivity<ActivityMainBinding, MainAdapter>() {
     override fun getItemClickListener() =
         OnItemClickListener { _, _ -> MainPopupWindow(this) }
 
-    override fun getItemLongClickListener() =
-        OnItemLongClickListener { position, _ ->
-            showDebug("long click item data is ${mAdapter.getItemData(position)}")
-        }
+    override fun getItemLongClickListener(): OnItemLongClickListener? = null
 
     override fun getLayoutId(): Int = R.layout.activity_main
 
@@ -37,8 +34,6 @@ class MainActivity : BaseListActivity<ActivityMainBinding, MainAdapter>() {
 
         // rcv
         mDataBinding.adapter = mAdapter
-        mDataBinding.itemClickListener = mClickListener
-        mDataBinding.itemLongClickListener = mLongClickListener
         mDataBinding.setLoadMore {
             mData.addAll(
                 mutableListOf("a", "a")

@@ -1,5 +1,7 @@
 package com.taonce.mvvm.base
 
+import android.os.Bundle
+import android.view.View
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
 
@@ -14,14 +16,16 @@ abstract class BaseListFragment<VDB : ViewDataBinding, A : BaseRecyclerAdapter<*
 
     protected val mAdapter by lazy { getAdapter() }
 
-    protected val mClickListener by lazy { getItemClickListener() }
-
-    protected val mLongClickListener by lazy { getItemLongClickListener() }
-
     abstract fun getAdapter(): A
 
     abstract fun getItemClickListener(): OnItemClickListener?
 
     abstract fun getItemLongClickListener(): OnItemLongClickListener?
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        mAdapter.setOnClickListener(getItemClickListener())
+        mAdapter.setOnLongClickListener(getItemLongClickListener())
+    }
 }
 
