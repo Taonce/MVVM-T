@@ -2,6 +2,7 @@ package com.taonce.mvvm.util
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.graphics.drawable.BitmapDrawable
 import android.view.LayoutInflater
 import android.widget.Button
 import android.widget.TextView
@@ -76,7 +77,7 @@ fun Context.customDialog(
     }
 }
 
-fun Context.dialog(
+fun Context.customDialog(
     message: CharSequence,
     title: CharSequence? = null,
     yesButton: (() -> Unit)? = null,
@@ -132,6 +133,7 @@ fun Context.iosDialog(
                 dialog.dismiss()
             }
         }
+        dialog.window?.setBackgroundDrawable(BitmapDrawable())
         dialog.show()
         dialog
     }

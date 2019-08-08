@@ -41,7 +41,7 @@ class MainActivity : BaseListActivity<ActivityMainBinding, MainAdapter>() {
             mAdapter.notifyItemRangeInserted(mAdapter.itemCount, 10)
         }
 
-        // network + coroutine
+        // retrofit + coroutine
         safeLaunch(Dispatchers.IO) { RetrofitManager.getApi }
 
     }
