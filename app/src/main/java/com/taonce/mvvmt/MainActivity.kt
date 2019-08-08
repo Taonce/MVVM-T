@@ -15,7 +15,7 @@ class MainActivity : BaseListActivity<ActivityMainBinding, MainAdapter>() {
 
     private val mData = mutableListOf<String>()
     override fun getAdapter(): MainAdapter {
-        for (i in 1..50) {
+        for (i in 1..5) {
             mData.add("$i")
         }
         return MainAdapter(mData)
@@ -41,7 +41,7 @@ class MainActivity : BaseListActivity<ActivityMainBinding, MainAdapter>() {
         mDataBinding.itemLongClickListener = mLongClickListener
         mDataBinding.setLoadMore {
             mData.addAll(
-                mutableListOf("a", "a", "a", "a", "a", "a", "a", "a", "a", "a")
+                mutableListOf("a", "a")
             )
             mAdapter.notifyItemRangeInserted(mAdapter.itemCount, 10)
         }
@@ -57,15 +57,17 @@ class MainAdapter(mData: MutableList<String>) :
     override fun getLayoutId(): Int = R.layout.recycler_item_main
 
     override fun setVariable(position: Int, dataBinding: RecyclerItemMainBinding) {
+        dataBinding.url = "https://ws1.sinaimg.cn/large/0065oQSqly1g0ajj4h6ndj30sg11xdmj.jpg"
     }
 
     override fun update(newData: MutableList<String>) {
     }
 }
 
-class MainPopupWindow(context: Context) : BasePopupWindow<ActivityMainBinding>(context) {
+class MainPopupWindow(context: Context) : BasePopupWindow<RecyclerItemMainBinding>(context) {
     override fun getLayoutId(): Int = R.layout.recycler_item_main
 
     override fun work() {
+        mDataBinding.url = "https://ws1.sinaimg.cn/large/0065oQSqly1g0ajj4h6ndj30sg11xdmj.jpg"
     }
 }

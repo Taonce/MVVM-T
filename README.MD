@@ -1,4 +1,4 @@
-## LifeCycle+DataBinding+LiveData+ViewModel+Coroutines+KTX = MVVM-T
+## Lifecycle+DataBinding+LiveData+ViewModel+Coroutines+KTX = MVVM-T
 > 使用前请务必通读此篇README文档
 
 #### 使用
@@ -34,6 +34,7 @@ android {
 * `EditText` 的文本改变事件
 * `WebView` 的加载 `url` 事件
 * `ViewPager` 的 `transform` 属性
+* `ImageView` 的 `ImageUrl`属性
 
 #### 网络请求
 * Retrofit中设置下 `BASE_URL`
