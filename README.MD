@@ -28,6 +28,7 @@ android {
 * BaseFragmentPagerAdapter
 * BaseListActivity
 * BaseListFragment
+* BaseDiffUtil
 
 #### `BindingAdapter` 中封装
 * `RecyclerView` 的点击事件和长按事件,新增监听滑动到底部的事件,可用于滑到底部自动加载

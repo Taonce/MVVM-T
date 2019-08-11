@@ -1,7 +1,6 @@
 package com.taonce.mvvm.base
 
 import android.content.Context
-import android.graphics.drawable.BitmapDrawable
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -29,12 +28,15 @@ abstract class BasePopupWindow<VDB : ViewDataBinding>(
     protected val mDataBinding: VDB
 
     init {
-        mDataBinding = DataBindingUtil.inflate(LayoutInflater.from(context), getLayoutId(), null, false)
+        mDataBinding = DataBindingUtil.inflate(
+            LayoutInflater.from(context),
+            getLayoutId(), null, false
+        )
         contentView = mDataBinding.root
         animationStyle = animStyle
         setWidth(width)
         setHeight(height)
-        setBackgroundDrawable(BitmapDrawable(context.resources))
+        setBackgroundDrawable(null)
         showAtLocation(mDataBinding.root, gravity, 0, 0)
         work()
     }

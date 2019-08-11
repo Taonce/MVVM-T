@@ -84,6 +84,31 @@ abstract class BaseRecyclerAdapter<VDB : ViewDataBinding, T>(
             }
     }
 
+    /**
+     * 指定位置的item插入
+     */
+    fun addItem(position: Int, data: T) {
+        if (position in 0..itemCount) {
+            mData?.let {
+                it.add(position, data)
+                notifyItemInserted(position)
+                if (position != itemCount) {
+                    notifyItemRangeChanged(position, itemCount - position)
+                }
+            }
+        }
+    }
+
+    /**
+     * 列表末尾插入多条数据
+     */
+    fun add(newData: MutableList<T>) {
+        mData?.let {
+            it.addAll(newData)
+            notifyItemRangeInserted(itemCount, newData.size)
+        }
+    }
+
     fun setOnClickListener(listener: OnItemClickListener?) {
         mClickListener = listener
     }

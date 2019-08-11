@@ -35,10 +35,7 @@ class MainActivity : BaseListActivity<ActivityMainBinding, MainAdapter>() {
         // rcv
         mDataBinding.adapter = mAdapter
         mDataBinding.setLoadMore {
-            mData.addAll(
-                mutableListOf("a", "a")
-            )
-            mAdapter.notifyItemRangeInserted(mAdapter.itemCount, 10)
+            mAdapter.add(mutableListOf("a", "a", "a", "a"))
         }
 
         // retrofit + coroutine
