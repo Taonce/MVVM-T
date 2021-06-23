@@ -3,12 +3,11 @@ package com.taonce.mvvm.base
 import android.content.pm.PackageManager
 import android.graphics.Color
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import androidx.databinding.DataBindingUtil
-import androidx.databinding.ViewDataBinding
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProviders
 import kotlinx.coroutines.CoroutineScope
@@ -22,22 +21,22 @@ import kotlinx.coroutines.cancel
  * Project: MVVM-T
  * Desc: [ActivityCompat] 基类，封装在 [MainScope] 中
  */
-abstract class BaseActivity<VDB : ViewDataBinding> : AppCompatActivity(), CoroutineScope by MainScope() {
+abstract class BaseActivity : AppCompatActivity(), CoroutineScope by MainScope() {
     companion object {
         private const val PERMISSION_REQUEST_CODE = 0x01
     }
+
+    protected lateinit var mRootView: View
 
     // 申请权限时成功和失败的回调
     private var mPermissionRequestSuccess: (() -> Unit)? = null
     private var mPermissionRequestFailed: ((permissions: Array<String>) -> Unit)? = null
 
-    protected val mDataBinding: VDB by lazy {
-        DataBindingUtil.setContentView(this, getLayoutId()) as VDB
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        mDataBinding.lifecycleOwner = this
+        mRootView = LayoutInflater.from(this).inflate(getLayoutId(), null)
+        setContentView(mRootView)
         work(savedInstanceState)
     }
 
@@ -49,8 +48,6 @@ abstract class BaseActivity<VDB : ViewDataBinding> : AppCompatActivity(), Corout
         super.onDestroy()
         // 取消MainScope下的所有的协程
         cancel()
-        // 移除DB的监听
-        mDataBinding.unbind()
     }
 
     /**
@@ -86,7 +83,12 @@ abstract class BaseActivity<VDB : ViewDataBinding> : AppCompatActivity(), Corout
         mPermissionRequestFailed = failed
         val shouldRequestPermissions = mutableListOf<String>()
         shouldRequestPermissions.addAll(
-            permissions.filter { ContextCompat.checkSelfPermission(this, it) != PackageManager.PERMISSION_GRANTED }
+            permissions.filter {
+                ContextCompat.checkSelfPermission(
+                    this,
+                    it
+                ) != PackageManager.PERMISSION_GRANTED
+            }
         )
         if (shouldRequestPermissions.isEmpty()) (mPermissionRequestSuccess!!)() else ActivityCompat.requestPermissions(
             this,
@@ -95,7 +97,11 @@ abstract class BaseActivity<VDB : ViewDataBinding> : AppCompatActivity(), Corout
         )
     }
 
-    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         if (requestCode == PERMISSION_REQUEST_CODE) {
             val deniedPermissions = mutableListOf<String>()

@@ -19,10 +19,10 @@ import android.os.Build
  */
 fun Context.isNetConnected(): Boolean {
     val connectivityManager: ConnectivityManager? =
-        this.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        this.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager?
     connectivityManager?.let {
-        val netInfo: NetworkInfo = it.activeNetworkInfo
-        if (netInfo.isConnected) {
+        val netInfo: NetworkInfo? = it.activeNetworkInfo
+        if (netInfo?.isConnected == true) {
             if (netInfo.detailedState == NetworkInfo.DetailedState.CONNECTED) {
                 return true
             }
@@ -38,9 +38,9 @@ fun Context.isWifi(): Boolean {
     val connectivityManager: ConnectivityManager =
         this.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
     return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-        connectivityManager.activeNetworkInfo.subtype == NetworkCapabilities.TRANSPORT_WIFI
+        connectivityManager.activeNetworkInfo?.subtype == NetworkCapabilities.TRANSPORT_WIFI
     } else {
-        connectivityManager.activeNetworkInfo.subtype == ConnectivityManager.TYPE_WIFI
+        connectivityManager.activeNetworkInfo?.subtype == ConnectivityManager.TYPE_WIFI
     }
 }
 

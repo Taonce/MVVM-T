@@ -2,16 +2,18 @@ package com.taonce.mvvmt
 
 import android.content.Context
 import android.os.Bundle
+import android.view.View
+import android.widget.ImageView
+import android.widget.TextView
+import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.taonce.mvvm.base.*
 import com.taonce.mvvm.network.RetrofitManager
 import com.taonce.mvvm.util.iosDialog
 import com.taonce.mvvm.util.safeLaunch
-import com.taonce.mvvm.util.showDebug
-import com.taonce.mvvmt.databinding.ActivityMainBinding
-import com.taonce.mvvmt.databinding.RecyclerItemMainBinding
 import kotlinx.coroutines.Dispatchers
 
-class MainActivity : BaseListActivity<ActivityMainBinding, MainAdapter>() {
+class MainActivity : BaseListActivity<MainAdapter>() {
 
     private val mData = mutableListOf<String>()
     override fun getAdapter(): MainAdapter {
@@ -33,10 +35,8 @@ class MainActivity : BaseListActivity<ActivityMainBinding, MainAdapter>() {
         iosDialog("标题", "信息")
 
         // rcv
-        mDataBinding.adapter = mAdapter
-        mDataBinding.setLoadMore {
-            mAdapter.add(mutableListOf("a", "a", "a", "a"))
-        }
+        val recyclerView = mRootView.findViewById<RecyclerView>(R.id.rcv)
+        recyclerView.adapter = mAdapter
 
         // retrofit + coroutine
         safeLaunch(Dispatchers.IO) { RetrofitManager.getApi }
@@ -45,21 +45,31 @@ class MainActivity : BaseListActivity<ActivityMainBinding, MainAdapter>() {
 }
 
 class MainAdapter(mData: MutableList<String>) :
-    BaseRecyclerAdapter<RecyclerItemMainBinding, String>(mData) {
+    BaseRecyclerAdapter<String>(mData) {
     override fun getLayoutId(): Int = R.layout.recycler_item_main
 
-    override fun setVariable(position: Int, dataBinding: RecyclerItemMainBinding) {
-        dataBinding.url = "https://ws1.sinaimg.cn/large/0065oQSqly1g0ajj4h6ndj30sg11xdmj.jpg"
+    override fun setVariable(position: Int, rootView: View) {
+        val imageView = rootView.findViewById<ImageView>(R.id.iv)
+        Glide.with(imageView.context)
+            .load("https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fphoto.16pic.com%2F00%2F07%2F85%2F16pic_785133_b.jpg&refer=http%3A%2F%2Fphoto.16pic.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1627029920&t=ce5901d26d8be9989deaca630878f1e2")
+            .centerCrop()
+            .into(imageView)
+        val textView = rootView.findViewById<TextView>(R.id.tv_item)
+        textView.text = position.toString()
     }
 
     override fun update(newData: MutableList<String>) {
     }
 }
 
-class MainPopupWindow(context: Context) : BasePopupWindow<RecyclerItemMainBinding>(context) {
+class MainPopupWindow(context: Context) : BasePopupWindow(context) {
     override fun getLayoutId(): Int = R.layout.recycler_item_main
 
     override fun work() {
-        mDataBinding.url = "https://ws1.sinaimg.cn/large/0065oQSqly1g0ajj4h6ndj30sg11xdmj.jpg"
+        val imageView = contentView.findViewById<ImageView>(R.id.iv)
+        Glide.with(imageView.context)
+            .load("https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fphoto.16pic.com%2F00%2F07%2F85%2F16pic_785133_b.jpg&refer=http%3A%2F%2Fphoto.16pic.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1627029920&t=ce5901d26d8be9989deaca630878f1e2")
+            .centerCrop()
+            .into(imageView)
     }
 }

@@ -19,7 +19,7 @@ import java.io.Serializable
  * [map]: put data
  * [isFinished]: [BaseActivity] is finish or is not finish
  */
-fun <T : BaseActivity<*>> BaseActivity<*>.start(
+fun <T : BaseActivity> BaseActivity.start(
     clazz: Class<T>,
     map: Map<String, Any>? = null,
     isFinished: Boolean = false
@@ -63,7 +63,7 @@ fun <T : BaseActivity<*>> BaseActivity<*>.start(
  * [map]: put data
  * Don't need to include `isFinished` as it is an extension of [BaseFragment]
  */
-fun <T : BaseActivity<*>> BaseFragment<*>.start(
+fun <T : BaseActivity> BaseFragment.start(
     clazz: Class<T>,
     map: Map<String, Any>? = null
 ) {

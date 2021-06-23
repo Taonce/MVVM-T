@@ -1,9 +1,8 @@
 package com.taonce.mvvm.base
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
-import androidx.databinding.DataBindingUtil
-import androidx.databinding.ViewDataBinding
 import androidx.recyclerview.widget.RecyclerView
 
 
@@ -13,9 +12,9 @@ import androidx.recyclerview.widget.RecyclerView
  * Project: MVVM-T
  * Desc: [RecyclerView]的Adapter封装，结合的是DataBinding
  */
-abstract class BaseRecyclerAdapter<VDB : ViewDataBinding, T>(
+abstract class BaseRecyclerAdapter<T>(
     private val mData: MutableList<T>? = null
-) : RecyclerView.Adapter<BaseRecyclerHolder<VDB>>() {
+) : RecyclerView.Adapter<BaseRecyclerHolder>() {
 
     private var mClickListener: OnItemClickListener? = null
     private var mLongClickListener: OnItemLongClickListener? = null
@@ -23,9 +22,8 @@ abstract class BaseRecyclerAdapter<VDB : ViewDataBinding, T>(
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
-    ): BaseRecyclerHolder<VDB> = BaseRecyclerHolder(
-        DataBindingUtil.inflate(
-            LayoutInflater.from(parent.context),
+    ): BaseRecyclerHolder = BaseRecyclerHolder(
+        LayoutInflater.from(parent.context).inflate(
             getLayoutId(),
             parent,
             false
@@ -33,20 +31,17 @@ abstract class BaseRecyclerAdapter<VDB : ViewDataBinding, T>(
     )
 
     override fun onBindViewHolder(
-        holder: BaseRecyclerHolder<VDB>,
+        holder: BaseRecyclerHolder,
         position: Int
     ) {
-        setVariable(position, holder.dataBinding)
-        holder.dataBinding.apply {
-            executePendingBindings()
-            root.apply {
-                setOnClickListener {
-                    mClickListener?.click(position, it)
-                }
-                setOnLongClickListener {
-                    mLongClickListener?.click(position, it)
-                    true
-                }
+        setVariable(position, holder.rootView)
+        holder.rootView.apply {
+            setOnClickListener {
+                mClickListener?.click(position, it)
+            }
+            setOnLongClickListener {
+                mLongClickListener?.click(position, it)
+                true
             }
         }
     }
@@ -63,7 +58,7 @@ abstract class BaseRecyclerAdapter<VDB : ViewDataBinding, T>(
     /**
      * 处理界面
      */
-    abstract fun setVariable(position: Int, dataBinding: VDB)
+    abstract fun setVariable(position: Int, rootView: View)
 
     /**
      * 可结合DiffUtil使用

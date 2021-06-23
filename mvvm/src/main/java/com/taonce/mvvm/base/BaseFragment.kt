@@ -4,8 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.databinding.DataBindingUtil
-import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProviders
@@ -19,18 +17,20 @@ import kotlinx.coroutines.cancel
  * Project: MVVM-T
  * Desc: [Fragment] 基类，封装在 [MainScope] 中
  */
-abstract class BaseFragment<VDB : ViewDataBinding> : Fragment(), CoroutineScope by MainScope() {
+abstract class BaseFragment : Fragment(), CoroutineScope by MainScope() {
+    protected lateinit var mRootView: View
 
-    protected lateinit var mDataBinding: VDB
-
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        mDataBinding = DataBindingUtil.inflate(inflater, getLayoutId(), container, false)
-        return mDataBinding.root
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        mRootView = inflater.inflate(getLayoutId(), container, false)
+        return mRootView
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        mDataBinding.lifecycleOwner = this
         work(view, savedInstanceState)
     }
 
@@ -51,15 +51,14 @@ abstract class BaseFragment<VDB : ViewDataBinding> : Fragment(), CoroutineScope 
         success: () -> Unit,
         failed: (permissions: Array<String>) -> Unit
     ) {
-        if (activity != null && activity is BaseActivity<*>) {
-            (activity as BaseActivity<*>).requestPermissions(permissions, success, failed)
+        if (activity != null && activity is BaseActivity) {
+            (activity as BaseActivity).requestPermissions(permissions, success, failed)
         }
     }
 
     override fun onDestroy() {
         super.onDestroy()
         cancel()
-        mDataBinding.unbind()
     }
 }
 
