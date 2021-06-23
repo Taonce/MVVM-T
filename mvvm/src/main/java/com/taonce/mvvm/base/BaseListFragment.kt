@@ -17,9 +17,9 @@ abstract class BaseListFragment<A : BaseRecyclerAdapter<*>>
 
     abstract fun getAdapter(): A
 
-    abstract fun getItemClickListener(): OnItemClickListener?
+    open fun getItemClickListener(): OnItemClickListener? = null
 
-    abstract fun getItemLongClickListener(): OnItemLongClickListener?
+    open fun getItemLongClickListener(): OnItemLongClickListener? = null
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

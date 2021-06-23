@@ -15,9 +15,9 @@ abstract class BaseListActivity<A : BaseRecyclerAdapter<*>> : BaseActivity() {
 
     abstract fun getAdapter(): A
 
-    abstract fun getItemClickListener(): OnItemClickListener?
+    open fun getItemClickListener(): OnItemClickListener? = null
 
-    abstract fun getItemLongClickListener(): OnItemLongClickListener?
+    open fun getItemLongClickListener(): OnItemLongClickListener? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

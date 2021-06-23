@@ -2,6 +2,8 @@ package com.taonce.mvvmt
 
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
+import android.view.KeyEvent
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
@@ -14,19 +16,27 @@ import com.taonce.mvvm.util.safeLaunch
 import kotlinx.coroutines.Dispatchers
 
 class MainActivity : BaseListActivity<MainAdapter>() {
+    companion object {
+        const val TAG = "MVVM_T_MainActivity"
+    }
 
     private val mData = mutableListOf<String>()
+    private var popupWindow: MainPopupWindow? = null
+
+
     override fun getAdapter(): MainAdapter {
-        for (i in 1..5) {
-            mData.add("$i")
-        }
+//        for (i in 1..5) {
+//            mData.add("$i")
+//        }
+        mData.add("1")
         return MainAdapter(mData)
     }
 
     override fun getItemClickListener() =
-        OnItemClickListener { _, _ -> MainPopupWindow(this) }
-
-    override fun getItemLongClickListener(): OnItemLongClickListener? = null
+        OnItemClickListener { _, _ ->
+            popupWindow = MainPopupWindow()
+            popupWindow?.show(supportFragmentManager, "MainActivity")
+        }
 
     override fun getLayoutId(): Int = R.layout.activity_main
 
@@ -41,6 +51,10 @@ class MainActivity : BaseListActivity<MainAdapter>() {
         // retrofit + coroutine
         safeLaunch(Dispatchers.IO) { RetrofitManager.getApi }
 
+    }
+
+    override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
+        return super.onKeyDown(keyCode, event)
     }
 }
 
@@ -62,11 +76,11 @@ class MainAdapter(mData: MutableList<String>) :
     }
 }
 
-class MainPopupWindow(context: Context) : BasePopupWindow(context) {
+class MainPopupWindow : BaseDialogFragment() {
     override fun getLayoutId(): Int = R.layout.recycler_item_main
 
-    override fun work() {
-        val imageView = contentView.findViewById<ImageView>(R.id.iv)
+    override fun work(view: View, savedInstanceState: Bundle?) {
+        val imageView = mRootView.findViewById<ImageView>(R.id.iv)
         Glide.with(imageView.context)
             .load("https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fphoto.16pic.com%2F00%2F07%2F85%2F16pic_785133_b.jpg&refer=http%3A%2F%2Fphoto.16pic.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1627029920&t=ce5901d26d8be9989deaca630878f1e2")
             .centerCrop()
