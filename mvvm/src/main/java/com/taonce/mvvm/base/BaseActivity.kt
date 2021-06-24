@@ -10,6 +10,7 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProviders
+import com.taonce.mvvm.util.showDebug
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.cancel
@@ -30,14 +31,17 @@ abstract class BaseActivity : AppCompatActivity(), CoroutineScope by MainScope()
 
     // 申请权限时成功和失败的回调
     private var mPermissionRequestSuccess: (() -> Unit)? = null
+
     private var mPermissionRequestFailed: ((permissions: Array<String>) -> Unit)? = null
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        showDebug(msg = "activity create start")
         super.onCreate(savedInstanceState)
         mRootView = LayoutInflater.from(this).inflate(getLayoutId(), null)
         setContentView(mRootView)
         work(savedInstanceState)
+        showDebug(msg = "activity create end")
     }
 
     abstract fun getLayoutId(): Int

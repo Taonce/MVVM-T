@@ -1,18 +1,23 @@
 package com.taonce.mvvmt
 
-import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import android.view.KeyEvent
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import androidx.viewbinding.ViewBinding
 import com.bumptech.glide.Glide
-import com.taonce.mvvm.base.*
+import com.taonce.mvvm.base.BaseDialogFragment
+import com.taonce.mvvm.base.BaseListActivity
+import com.taonce.mvvm.base.BaseRecyclerAdapter
+import com.taonce.mvvm.base.OnItemClickListener
 import com.taonce.mvvm.network.RetrofitManager
 import com.taonce.mvvm.util.iosDialog
+import com.taonce.mvvm.util.safeClick
 import com.taonce.mvvm.util.safeLaunch
+import com.taonce.mvvm.util.showDebug
+import com.taonce.mvvmt.databinding.ActivityMainBinding
 import kotlinx.coroutines.Dispatchers
 
 class MainActivity : BaseListActivity<MainAdapter>() {
@@ -22,7 +27,9 @@ class MainActivity : BaseListActivity<MainAdapter>() {
 
     private val mData = mutableListOf<String>()
     private var popupWindow: MainPopupWindow? = null
-
+    private val mainViewBinding by lazy {
+        ActivityMainBinding.inflate(layoutInflater)
+    }
 
     override fun getAdapter(): MainAdapter {
 //        for (i in 1..5) {
@@ -65,7 +72,7 @@ class MainAdapter(mData: MutableList<String>) :
     override fun setVariable(position: Int, rootView: View) {
         val imageView = rootView.findViewById<ImageView>(R.id.iv)
         Glide.with(imageView.context)
-            .load("https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fphoto.16pic.com%2F00%2F07%2F85%2F16pic_785133_b.jpg&refer=http%3A%2F%2Fphoto.16pic.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1627029920&t=ce5901d26d8be9989deaca630878f1e2")
+            .load("https://bkimg.cdn.bcebos.com/pic/9a504fc2d5628535746e08f997ef76c6a6ef6358?x-bce-process=image/resize,m_lfit,w_268,limit_1/format,f_auto")
             .centerCrop()
             .into(imageView)
         val textView = rootView.findViewById<TextView>(R.id.tv_item)
@@ -82,8 +89,11 @@ class MainPopupWindow : BaseDialogFragment() {
     override fun work(view: View, savedInstanceState: Bundle?) {
         val imageView = mRootView.findViewById<ImageView>(R.id.iv)
         Glide.with(imageView.context)
-            .load("https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fphoto.16pic.com%2F00%2F07%2F85%2F16pic_785133_b.jpg&refer=http%3A%2F%2Fphoto.16pic.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1627029920&t=ce5901d26d8be9989deaca630878f1e2")
+            .load("https://bkimg.cdn.bcebos.com/pic/9a504fc2d5628535746e08f997ef76c6a6ef6358?x-bce-process=image/resize,m_lfit,w_268,limit_1/format,f_auto")
             .centerCrop()
             .into(imageView)
+        imageView.safeClick {
+            showDebug(msg = "imageView click")
+        }
     }
 }
