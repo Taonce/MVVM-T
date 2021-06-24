@@ -1,7 +1,6 @@
 package com.taonce.mvvm.util
 
 import android.util.Log
-import kotlin.system.measureTimeMillis
 
 /**
  * Author: Taonce
@@ -67,19 +66,29 @@ fun showWarning(
 private fun zipLogMsg(msg: String): String {
     val stackTrace = Thread.currentThread().stackTrace
     val buffer = StringBuffer()
-    stackTrace.takeIf { it.size > 4 }?.let {
+    stackTrace.takeIf { it.size > 5 }?.let {
         val element = stackTrace[5]
-        buffer.append(element.className)
-        buffer.append(".")
-        buffer.append(element.methodName)
-        buffer.append("(")
-        buffer.append(element.fileName)
-        buffer.append(":")
-        buffer.append(element.lineNumber)
-        buffer.append(")")
-        buffer.append(": ")
+        buffer.apply {
+            append(getShortClassName(element.className))
+            append(".")
+            append(element.methodName)
+            append("(")
+            append(element.fileName)
+            append(":")
+            append(element.lineNumber)
+            append(")")
+            append(":")
+        }
     }
-    buffer.append(msg)
-    return buffer.toString()
+    return with(buffer) {
+        append(msg).toString()
+    }
+}
+
+private fun getShortClassName(className: String): String {
+    if (className.isEmpty()) {
+        return ""
+    }
+    return className.substring(className.lastIndexOf(".") + 1)
 }
 

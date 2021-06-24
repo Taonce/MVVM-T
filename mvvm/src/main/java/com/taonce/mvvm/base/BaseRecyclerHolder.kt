@@ -2,6 +2,7 @@ package com.taonce.mvvm.base
 
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
+import androidx.viewbinding.ViewBinding
 
 
 /**
@@ -10,4 +11,5 @@ import androidx.recyclerview.widget.RecyclerView
  * Project: MVVM-T
  * Desc: [RecyclerView]的ViewHolder基类
  */
-class BaseRecyclerHolder(val rootView: View) : RecyclerView.ViewHolder(rootView)
+class BaseRecyclerHolder<VB : ViewBinding>(val viewBinding: VB) :
+    RecyclerView.ViewHolder(viewBinding.root)

@@ -10,7 +10,7 @@ import androidx.fragment.app.Fragment
  * @description 带列表的[Fragment]
  * 单击和长按事件如果没设置的话直接返回null
  */
-abstract class BaseListFragment<A : BaseRecyclerAdapter<*>>
+abstract class BaseListFragment<A : BaseRecyclerAdapter<*, *>>
     : BaseFragment() {
 
     protected val mAdapter by lazy { getAdapter() }

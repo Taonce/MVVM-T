@@ -4,6 +4,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import androidx.viewbinding.ViewBinding
 
 
 /**
@@ -12,9 +13,9 @@ import androidx.recyclerview.widget.RecyclerView
  * Project: MVVM-T
  * Desc: [RecyclerView]的Adapter封装，结合的是DataBinding
  */
-abstract class BaseRecyclerAdapter<T>(
+abstract class BaseRecyclerAdapter<VB : ViewBinding, T>(
     private val mData: MutableList<T>? = null
-) : RecyclerView.Adapter<BaseRecyclerHolder>() {
+) : RecyclerView.Adapter<BaseRecyclerHolder<VB>>() {
 
     private var mClickListener: OnItemClickListener? = null
     private var mLongClickListener: OnItemLongClickListener? = null
@@ -22,20 +23,16 @@ abstract class BaseRecyclerAdapter<T>(
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
-    ): BaseRecyclerHolder = BaseRecyclerHolder(
-        LayoutInflater.from(parent.context).inflate(
-            getLayoutId(),
-            parent,
-            false
-        )
+    ): BaseRecyclerHolder<VB> = BaseRecyclerHolder(
+        getViewBinding(parent)
     )
 
     override fun onBindViewHolder(
-        holder: BaseRecyclerHolder,
+        holder: BaseRecyclerHolder<VB>,
         position: Int
     ) {
-        setVariable(position, holder.rootView)
-        holder.rootView.apply {
+        setVariable(position, holder.viewBinding)
+        holder.viewBinding.root.apply {
             setOnClickListener {
                 mClickListener?.click(position, it)
             }
@@ -55,10 +52,12 @@ abstract class BaseRecyclerAdapter<T>(
 
     abstract fun getLayoutId(): Int
 
+    abstract fun getViewBinding(parent: ViewGroup): VB
+
     /**
      * 处理界面
      */
-    abstract fun setVariable(position: Int, rootView: View)
+    abstract fun setVariable(position: Int, vb: VB)
 
     /**
      * 可结合DiffUtil使用

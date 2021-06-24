@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.DialogFragment
+import androidx.viewbinding.ViewBinding
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.cancel
@@ -13,8 +14,9 @@ import kotlinx.coroutines.cancel
  * @author Taonce.
  * @description
  */
-abstract class BaseDialogFragment : DialogFragment(), CoroutineScope by MainScope() {
-    protected lateinit var mRootView: View
+abstract class BaseDialogFragment<VB : ViewBinding> : DialogFragment(),
+    CoroutineScope by MainScope() {
+    protected val vb: VB by lazy { getViewBinding() }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -22,11 +24,10 @@ abstract class BaseDialogFragment : DialogFragment(), CoroutineScope by MainScop
         savedInstanceState: Bundle?
     ): View? {
         setStyle(STYLE_NORMAL, android.R.style.Theme_Material_Dialog)
-        mRootView = inflater.inflate(getLayoutId(), container, false)
-        return mRootView
+        return vb.root
     }
 
-    abstract fun getLayoutId(): Int
+    abstract fun getViewBinding(): VB
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
