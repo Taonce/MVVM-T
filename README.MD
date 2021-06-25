@@ -1,4 +1,4 @@
-## Lifecycle+DataBinding+LiveData+ViewModel+Coroutines+KTX = MVVM-T
+## Lifecycle+ViewBinding+LiveData+ViewModel+Coroutines+KTX = MVVM-T
 > 使用前请务必通读此篇README文档
 
 #### 使用
@@ -11,7 +11,7 @@
 
 ```
 android {
-    dataBinding {
+    viewBinding {
         enabled = true
     }
 }
@@ -30,6 +30,7 @@ android {
 * BaseListFragment
 * BaseDiffUtil
 
+@Deprecated
 #### `BindingAdapter` 中封装
 * `RecyclerView` 的点击事件和长按事件,新增监听滑动到底部的事件,可用于滑到底部自动加载
 * `EditText` 的文本改变事件
@@ -42,12 +43,12 @@ android {
 * 请求推荐使用协程: `safeLaunch(Dispatchers.IO) { RetrofitManager.getApi.xxx() }`
 
 #### 工具类
-* `CoroutineUtils`:统一处理协程中抛出的异常
+* `CoroutineUtils`:统一处理协程中抛出的异常，增加了多种协程调用
 * `DensityUtils`:屏幕相关
 * `DialogUtils`:弹框
 * `FileUtils`:文件
 * `IntentUtils`:界面跳转
-* `LogUtils`:日志
+* `LogUtils`:日志，增加类名，行数等信息打印
 * `NetUtils`:手机网络
 * `PackageUtils`:apk信息
 * `PhoneUtils`:手机信息

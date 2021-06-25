@@ -3,15 +3,16 @@ package com.taonce.mvvm.util
 import android.content.Context
 import android.content.SharedPreferences
 
-
 /**
  * Author: Taonce
  * Date: 2019/4/1
  * Desc: SP 文件的工具类
  */
 
-// SP文件名
-const val fileName = "share_preference"
+/**
+ * SP文件名
+ */
+const val fileName = "mvvm_share_preference"
 
 /**
  * 向SP中写入数据
@@ -25,7 +26,7 @@ fun Context.putSP(key: String, value: Any) {
         is Long -> sp.edit().putLong(key, value).apply()
         is Boolean -> sp.edit().putBoolean(key, value).apply()
         is Float -> sp.edit().putFloat(key, value).apply()
-        else -> toast("类型错误")
+        else -> showDebug(msg = "putSp 类型错误")
     }
 }
 
@@ -41,7 +42,7 @@ fun Context.getSP(key: String, defaultValue: Any): Any? {
         is Long -> return sp.getLong(key, defaultValue)
         is Boolean -> return sp.getBoolean(key, defaultValue)
         is Float -> return sp.getFloat(key, defaultValue)
-        else -> toast("类型错误")
+        else -> showDebug(msg = "getSP 类型错误")
     }
     return null
 }
