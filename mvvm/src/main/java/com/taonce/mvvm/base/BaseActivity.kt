@@ -10,11 +10,11 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProviders
+import androidx.viewbinding.ViewBinding
 import com.taonce.mvvm.util.showDebug
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.cancel
-
 
 /**
  * Author: Taonce
@@ -22,11 +22,19 @@ import kotlinx.coroutines.cancel
  * Project: MVVM-T
  * Desc: [ActivityCompat] 基类，封装在 [MainScope] 中
  */
-abstract class BaseActivity : AppCompatActivity(), CoroutineScope by MainScope() {
+abstract class BaseActivity<VB : ViewBinding> : AppCompatActivity(), CoroutineScope by MainScope() {
     companion object {
         private const val PERMISSION_REQUEST_CODE = 0x01
     }
 
+    /**
+     * ViewBinding
+     */
+    protected val mViewBinding: VB by lazy { getViewBinding() }
+
+    /**
+     * RootView
+     */
     protected lateinit var mRootView: View
 
     // 申请权限时成功和失败的回调
@@ -38,13 +46,13 @@ abstract class BaseActivity : AppCompatActivity(), CoroutineScope by MainScope()
     override fun onCreate(savedInstanceState: Bundle?) {
         showDebug(msg = "activity create start")
         super.onCreate(savedInstanceState)
-        mRootView = LayoutInflater.from(this).inflate(getLayoutId(), null)
+        mRootView = mViewBinding.root
         setContentView(mRootView)
         work(savedInstanceState)
         showDebug(msg = "activity create end")
     }
 
-    abstract fun getLayoutId(): Int
+    abstract fun getViewBinding(): VB
 
     abstract fun work(savedInstanceState: Bundle?)
 

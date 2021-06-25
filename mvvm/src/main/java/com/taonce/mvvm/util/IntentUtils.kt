@@ -3,6 +3,8 @@ package com.taonce.mvvm.util
 import android.content.Intent
 import android.os.Bundle
 import android.os.Parcelable
+import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
 import com.taonce.mvvm.base.BaseActivity
 import com.taonce.mvvm.base.BaseFragment
 import java.io.Serializable
@@ -19,7 +21,7 @@ import java.io.Serializable
  * [map]: put data
  * [isFinished]: [BaseActivity] is finish or is not finish
  */
-fun <T : BaseActivity> BaseActivity.start(
+fun <T : AppCompatActivity> AppCompatActivity.start(
     clazz: Class<T>,
     map: Map<String, Any>? = null,
     isFinished: Boolean = false
@@ -63,7 +65,7 @@ fun <T : BaseActivity> BaseActivity.start(
  * [map]: put data
  * Don't need to include `isFinished` as it is an extension of [BaseFragment]
  */
-fun <T : BaseActivity> BaseFragment.start(
+fun <T : AppCompatActivity> Fragment.start(
     clazz: Class<T>,
     map: Map<String, Any>? = null
 ) {

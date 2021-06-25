@@ -2,6 +2,7 @@ package com.taonce.mvvm.base
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.viewbinding.ViewBinding
 
 
 /**
@@ -9,7 +10,8 @@ import androidx.appcompat.app.AppCompatActivity
  * @description 带列表的[AppCompatActivity]
  * 单击和长按事件如果没设置的话直接返回null
  */
-abstract class BaseListActivity<A : BaseRecyclerAdapter<*, *>> : BaseActivity() {
+abstract class BaseListActivity<vb : ViewBinding, A : BaseRecyclerAdapter<*, *>> :
+    BaseActivity<vb>() {
 
     protected val mAdapter: A by lazy { getAdapter() }
 

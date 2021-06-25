@@ -16,7 +16,7 @@ import kotlinx.coroutines.cancel
  */
 abstract class BaseDialogFragment<VB : ViewBinding> : DialogFragment(),
     CoroutineScope by MainScope() {
-    protected val vb: VB by lazy { getViewBinding() }
+    protected val mViewBinding: VB by lazy { getViewBinding() }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -24,7 +24,7 @@ abstract class BaseDialogFragment<VB : ViewBinding> : DialogFragment(),
         savedInstanceState: Bundle?
     ): View? {
         setStyle(STYLE_NORMAL, android.R.style.Theme_Material_Dialog)
-        return vb.root
+        return mViewBinding.root
     }
 
     abstract fun getViewBinding(): VB

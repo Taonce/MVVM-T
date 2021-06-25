@@ -3,6 +3,7 @@ package com.taonce.mvvm.base
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
+import androidx.viewbinding.ViewBinding
 
 
 /**
@@ -10,8 +11,8 @@ import androidx.fragment.app.Fragment
  * @description 带列表的[Fragment]
  * 单击和长按事件如果没设置的话直接返回null
  */
-abstract class BaseListFragment<A : BaseRecyclerAdapter<*, *>>
-    : BaseFragment() {
+abstract class BaseListFragment<vb : ViewBinding, A : BaseRecyclerAdapter<*, *>>
+    : BaseFragment<vb>() {
 
     protected val mAdapter by lazy { getAdapter() }
 

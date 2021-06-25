@@ -1,6 +1,5 @@
 package com.taonce.mvvm.util
 
-import android.util.Log
 import kotlinx.coroutines.*
 import kotlin.coroutines.CoroutineContext
 
@@ -11,11 +10,11 @@ import kotlin.coroutines.CoroutineContext
  * Project: MVVM-T
  * Desc: 统一捕捉协程中的异常，可用于网络请求
  */
-private const val TAG = "CoroutinesUtils"
+private const val COROUTINES_TAG = "CoroutinesUtils"
 
 private val exceptionHandler: CoroutineExceptionHandler =
     CoroutineExceptionHandler { _, throwable ->
-        showThrowable(TAG, "coroutines Exception", throwable)
+        showThrowable(COROUTINES_TAG, "coroutines Exception", throwable)
     }
 
 private val handlerContext: CoroutineContext = exceptionHandler

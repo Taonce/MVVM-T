@@ -2,17 +2,18 @@ package com.taonce.mvvm.util
 
 import android.util.Log
 
+
 /**
  * Author: Taonce
  * Date: 2019/3/28
  * Desc: 常用的日志打印类
  */
+const val COMMON_TAG = "MVVM-T"
+
 private const val IS_SHOW_LOG: Boolean = true
 
-private const val TAG = "MVVM-T"
-
 fun showDebug(
-    tag: String = TAG,
+    tag: String = COMMON_TAG,
     msg: String
 ) {
     if (IS_SHOW_LOG) {
@@ -21,7 +22,7 @@ fun showDebug(
 }
 
 fun showError(
-    tag: String = TAG,
+    tag: String = COMMON_TAG,
     msg: String,
     error: Exception? = null
 ) {
@@ -34,7 +35,7 @@ fun showError(
 }
 
 fun showThrowable(
-    tag: String = TAG,
+    tag: String = COMMON_TAG,
     msg: String,
     throwable: Throwable? = null
 ) {
@@ -46,7 +47,7 @@ fun showThrowable(
 }
 
 fun showInfo(
-    tag: String = TAG,
+    tag: String = COMMON_TAG,
     msg: String
 ) {
     if (IS_SHOW_LOG) {
@@ -55,7 +56,7 @@ fun showInfo(
 }
 
 fun showWarning(
-    tag: String = TAG,
+    tag: String = COMMON_TAG,
     msg: String
 ) {
     if (IS_SHOW_LOG) {

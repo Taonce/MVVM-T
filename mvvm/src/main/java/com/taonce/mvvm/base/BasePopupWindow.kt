@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.PopupWindow
 import androidx.appcompat.app.AppCompatActivity
+import androidx.viewbinding.ViewBinding
 import com.taonce.mvvm.R
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.MainScope
@@ -16,18 +17,17 @@ import kotlinx.coroutines.cancel
  * @description
  */
 @Suppress("LeakingThis")
-abstract class BasePopupWindow(
+abstract class BasePopupWindow<VB : ViewBinding>(
     context: Context,
     animStyle: Int = R.style.PopWindowAnimation,
     width: Int = ViewGroup.LayoutParams.MATCH_PARENT,
     height: Int = ViewGroup.LayoutParams.WRAP_CONTENT,
     gravity: Int = Gravity.BOTTOM
 ) : PopupWindow(context), CoroutineScope by MainScope() {
+    protected val mViewBinding: VB by lazy { getViewBinding() }
 
     init {
-        contentView = LayoutInflater.from(context).inflate(
-            getLayoutId(), null, false
-        )
+        contentView = mViewBinding.root
         animationStyle = animStyle
         setWidth(width)
         setHeight(height)
@@ -37,7 +37,7 @@ abstract class BasePopupWindow(
         work()
     }
 
-    abstract fun getLayoutId(): Int
+    abstract fun getViewBinding(): VB
 
     abstract fun work()
 

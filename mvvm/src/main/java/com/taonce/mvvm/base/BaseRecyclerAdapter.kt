@@ -1,11 +1,8 @@
 package com.taonce.mvvm.base
 
-import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewbinding.ViewBinding
-
 
 /**
  * Author: Taonce
@@ -18,6 +15,7 @@ abstract class BaseRecyclerAdapter<VB : ViewBinding, T>(
 ) : RecyclerView.Adapter<BaseRecyclerHolder<VB>>() {
 
     private var mClickListener: OnItemClickListener? = null
+
     private var mLongClickListener: OnItemLongClickListener? = null
 
     override fun onCreateViewHolder(
@@ -57,7 +55,7 @@ abstract class BaseRecyclerAdapter<VB : ViewBinding, T>(
     /**
      * 处理界面
      */
-    abstract fun setVariable(position: Int, vb: VB)
+    abstract fun setVariable(position: Int, viewBinding: VB)
 
     /**
      * 可结合DiffUtil使用
