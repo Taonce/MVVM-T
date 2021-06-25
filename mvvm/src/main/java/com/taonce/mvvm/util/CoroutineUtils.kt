@@ -3,7 +3,6 @@ package com.taonce.mvvm.util
 import kotlinx.coroutines.*
 import kotlin.coroutines.CoroutineContext
 
-
 /**
  * Author: Taonce
  * Date: 2019/8/2

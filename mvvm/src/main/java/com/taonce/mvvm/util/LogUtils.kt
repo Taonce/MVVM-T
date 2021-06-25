@@ -13,8 +13,8 @@ const val COMMON_TAG = "MVVM-T"
 private const val IS_SHOW_LOG: Boolean = true
 
 fun showDebug(
-    tag: String = COMMON_TAG,
-    msg: String
+    msg: String,
+    tag: String = COMMON_TAG
 ) {
     if (IS_SHOW_LOG) {
         Log.d(tag, zipLogMsg(msg))
@@ -22,9 +22,9 @@ fun showDebug(
 }
 
 fun showError(
-    tag: String = COMMON_TAG,
     msg: String,
-    error: Exception? = null
+    error: Exception? = null,
+    tag: String = COMMON_TAG
 ) {
     if (IS_SHOW_LOG) {
         error?.let {
@@ -35,9 +35,9 @@ fun showError(
 }
 
 fun showThrowable(
-    tag: String = COMMON_TAG,
     msg: String,
-    throwable: Throwable? = null
+    throwable: Throwable? = null,
+    tag: String = COMMON_TAG
 ) {
     if (IS_SHOW_LOG) {
         throwable?.let {
@@ -47,8 +47,8 @@ fun showThrowable(
 }
 
 fun showInfo(
-    tag: String = COMMON_TAG,
-    msg: String
+    msg: String,
+    tag: String = COMMON_TAG
 ) {
     if (IS_SHOW_LOG) {
         Log.i(tag, zipLogMsg(msg))
@@ -56,8 +56,8 @@ fun showInfo(
 }
 
 fun showWarning(
-    tag: String = COMMON_TAG,
-    msg: String
+    msg: String,
+    tag: String = COMMON_TAG
 ) {
     if (IS_SHOW_LOG) {
         Log.w(tag, zipLogMsg(msg))

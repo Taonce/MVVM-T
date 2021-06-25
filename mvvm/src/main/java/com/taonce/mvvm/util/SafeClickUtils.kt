@@ -4,16 +4,16 @@ import android.view.View
 import com.taonce.mvvm.R
 
 /**
- * @author tao.
- * @description 设置点击事件时间间隔，默认1000ms
- * @date 2021/6/24
- */
-
-/**
  * 重复点击时间间隔
  */
 private const val INTERVAL = 1000L
 
+/**
+ * 设置点击事件时间间隔，默认1000ms
+ *
+ * @param interval 间隔
+ * @param onClick 点击事件
+ */
 fun View.safeClick(interval: Long = INTERVAL, onClick: () -> Unit) {
     setOnClickListener {
         val systemTime = System.currentTimeMillis()

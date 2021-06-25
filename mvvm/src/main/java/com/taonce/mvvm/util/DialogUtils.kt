@@ -33,8 +33,8 @@ fun Context.dialog(
     builder.apply {
         title?.let { setTitle(it) }
         setMessage(message)
-        yesButton?.let { setPositiveButton("确定") { _, _ -> it() } }
-        noButton?.let { setPositiveButton("取消") { _, _ -> it() } }
+        yesButton?.let { setPositiveButton(getString(R.string.enter)) { _, _ -> it() } }
+        noButton?.let { setPositiveButton(getString(R.string.cancel)) { _, _ -> it() } }
         show()
     }
 }
@@ -49,8 +49,8 @@ fun Context.dialog(
     builder.apply {
         title?.let { setTitle(it) }
         setMessage(message)
-        yesButton?.let { setPositiveButton("确定") { _, _ -> it() } }
-        noButton?.let { setPositiveButton("取消") { _, _ -> it() } }
+        yesButton?.let { setPositiveButton(getString(R.string.enter)) { _, _ -> it() } }
+        noButton?.let { setPositiveButton(getString(R.string.cancel)) { _, _ -> it() } }
         show()
     }
 }
@@ -71,8 +71,8 @@ fun Context.customDialog(
         title?.let { setTitle(it) }
         setMessage(message)
         setView(custom)
-        yesButton?.let { setPositiveButton("确定") { _, _ -> it() } }
-        noButton?.let { setPositiveButton("取消") { _, _ -> it() } }
+        yesButton?.let { setPositiveButton(getString(R.string.enter)) { _, _ -> it() } }
+        noButton?.let { setPositiveButton(getString(R.string.cancel)) { _, _ -> it() } }
         show()
     }
 }
@@ -90,8 +90,8 @@ fun Context.customDialog(
         title?.let { setTitle(it) }
         setMessage(message)
         setView(custom)
-        yesButton?.let { setPositiveButton("确定") { _, _ -> it() } }
-        noButton?.let { setPositiveButton("取消") { _, _ -> it() } }
+        yesButton?.let { setPositiveButton(getString(R.string.enter)) { _, _ -> it() } }
+        noButton?.let { setPositiveButton(getString(R.string.cancel)) { _, _ -> it() } }
         show()
     }
 }

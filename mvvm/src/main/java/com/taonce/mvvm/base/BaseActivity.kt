@@ -3,15 +3,17 @@ package com.taonce.mvvm.base
 import android.content.pm.PackageManager
 import android.graphics.Color
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
+import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProviders
 import androidx.viewbinding.ViewBinding
+import com.taonce.mvvm.util.ActivityStackManager
 import com.taonce.mvvm.util.showDebug
+import com.taonce.mvvm.util.showInfo
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.cancel
@@ -37,6 +39,16 @@ abstract class BaseActivity<VB : ViewBinding> : AppCompatActivity(), CoroutineSc
      */
     protected lateinit var mRootView: View
 
+    /**
+     * 是否显示Toolbar
+     */
+    private var isShowToolBar = true
+
+    /**
+     * 是否显示了StatusBar
+     */
+    private var isShowStatusBar = true
+
     // 申请权限时成功和失败的回调
     private var mPermissionRequestSuccess: (() -> Unit)? = null
 
@@ -46,31 +58,63 @@ abstract class BaseActivity<VB : ViewBinding> : AppCompatActivity(), CoroutineSc
     override fun onCreate(savedInstanceState: Bundle?) {
         showDebug(msg = "activity create start")
         super.onCreate(savedInstanceState)
+        preCreate()
+        ActivityStackManager.addActivity(this)
+        showOrHideToolBar()
         mRootView = mViewBinding.root
         setContentView(mRootView)
         work(savedInstanceState)
         showDebug(msg = "activity create end")
     }
 
+    abstract fun preCreate()
+
     abstract fun getViewBinding(): VB
 
     abstract fun work(savedInstanceState: Bundle?)
-
-    override fun onDestroy() {
-        super.onDestroy()
-        // 取消MainScope下的所有的协程
-        cancel()
-    }
 
     /**
      * 获取VM，只能获取不带参数的VM
      */
     fun <T : ViewModel> getViewModel(clazz: Class<T>): T = ViewModelProviders.of(this).get(clazz)
 
+    fun isShowToolBar(isShow: Boolean) {
+        isShowToolBar = isShow
+    }
+
+    fun setTransparent() {
+        if (!isShowStatusBar) {
+            showInfo(msg = "is not show StatusBar, not Transparent")
+            return
+        }
+        transparentStatusBar()
+    }
+
+    private fun showOrHideToolBar() {
+        if (!isShowToolBar) {
+            supportActionBar?.hide()
+        } else {
+            supportActionBar?.show()
+        }
+    }
+
+    fun showOrHideStatusBar(isShowStatusBar: Boolean) {
+        val attributes = window.attributes
+        if (!isShowStatusBar) {
+            attributes.flags = attributes.flags or WindowManager.LayoutParams.FLAG_FULLSCREEN
+            window.attributes = attributes
+            window.addFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS)
+        } else {
+            attributes.flags = attributes.flags and WindowManager.LayoutParams.FLAG_FULLSCREEN.inv()
+            window.attributes = attributes
+            window.clearFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS)
+        }
+    }
+
     /**
      * 透明状态栏
      */
-    fun transparentStatusBar() {
+    private fun transparentStatusBar() {
         window.decorView.systemUiVisibility =
             View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION or
                     View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN or
@@ -128,5 +172,13 @@ abstract class BaseActivity<VB : ViewBinding> : AppCompatActivity(), CoroutineSc
                 )
             }
         }
+    }
+
+    override fun onDestroy() {
+        showDebug(msg = "activity onDestroy")
+        super.onDestroy()
+        // 取消MainScope下的所有的协程
+        cancel()
+        ActivityStackManager.removeActivity(this)
     }
 }

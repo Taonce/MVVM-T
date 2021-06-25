@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.taonce.mvvm.base.BaseDialogFragment
 import com.taonce.mvvm.base.BaseListActivity
@@ -17,39 +16,45 @@ import com.taonce.mvvmt.databinding.RecyclerItemMainBinding.inflate
 
 class MainActivity : BaseListActivity<ActivityMainBinding, MainAdapter>() {
     companion object {
-        const val TAG = "MVVM_T_MainActivity"
+        const val TAG = COMMON_TAG + "MainActivity"
 
         const val IMAGE_URL =
             "https://bkimg.cdn.bcebos.com/pic/9a504fc2d5628535746e08f997ef76c6a6ef6358?x-bce-process=image/resize,m_lfit,w_268,limit_1/format,f_auto"
     }
 
     private val mData = mutableListOf<String>()
-    private var popupWindow: MainPopupWindow? = null
 
     override fun getAdapter(): MainAdapter {
+        mData.add("1")
         mData.add("1")
         return MainAdapter(mData)
     }
 
     override fun getItemClickListener() =
         OnItemClickListener { _, _ ->
-            popupWindow = MainPopupWindow()
-            popupWindow?.show(supportFragmentManager, "MainActivity")
+            showSnackBar(
+                view = mRootView,
+                msg = "show snack bar",
+                actionMsg = "dismiss"
+            ) { showDebug("clickSnackBar", tag = TAG) }
         }
+
+    override fun preCreate() {
+        isShowToolBar(false)
+        showOrHideStatusBar(false)
+    }
 
     override fun getViewBinding() =
         ActivityMainBinding.inflate(layoutInflater)
 
     override fun work(savedInstanceState: Bundle?) {
         // rcv
-        val recyclerView = mRootView.findViewById<RecyclerView>(R.id.rcv)
-        recyclerView.adapter = mAdapter
+        mViewBinding.rcv.adapter = mAdapter
     }
 }
 
 class MainAdapter(mData: MutableList<String>) :
     BaseRecyclerAdapter<RecyclerItemMainBinding, String>(mData) {
-    override fun getLayoutId(): Int = R.layout.recycler_item_main
 
     override fun getViewBinding(parent: ViewGroup) =
         inflate(LayoutInflater.from(parent.context))
@@ -65,7 +70,7 @@ class MainAdapter(mData: MutableList<String>) :
     }
 }
 
-class MainPopupWindow : BaseDialogFragment<RecyclerItemMainBinding>() {
+class MainTestDialog : BaseDialogFragment<RecyclerItemMainBinding>() {
     override fun getViewBinding() = inflate(LayoutInflater.from(context))
 
     override fun work(view: View, savedInstanceState: Bundle?) {

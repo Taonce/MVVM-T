@@ -28,19 +28,19 @@ fun Context.toastLong(resId: Int) {
     Toast.makeText(this, this.resources.getString(resId), Toast.LENGTH_LONG).show()
 }
 
-fun BaseFragment.toast(text: String) {
+fun BaseFragment<*>.toast(text: String) {
     Toast.makeText(this.context, text, Toast.LENGTH_SHORT).show()
 }
 
-fun BaseFragment.toast(resId: Int) {
+fun BaseFragment<*>.toast(resId: Int) {
     Toast.makeText(this.context, this.resources.getString(resId), Toast.LENGTH_SHORT).show()
 }
 
-fun BaseFragment.toastLong(text: String) {
+fun BaseFragment<*>.toastLong(text: String) {
     Toast.makeText(this.context, text, Toast.LENGTH_LONG).show()
 }
 
-fun BaseFragment.toastLong(resId: Int) {
+fun BaseFragment<*>.toastLong(resId: Int) {
     Toast.makeText(this.context, this.resources.getString(resId), Toast.LENGTH_LONG).show()
 }
 

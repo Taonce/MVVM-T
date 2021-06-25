@@ -48,8 +48,6 @@ abstract class BaseRecyclerAdapter<VB : ViewBinding, T>(
 
     override fun getItemCount(): Int = mData?.size ?: 0
 
-    abstract fun getLayoutId(): Int
-
     abstract fun getViewBinding(parent: ViewGroup): VB
 
     /**

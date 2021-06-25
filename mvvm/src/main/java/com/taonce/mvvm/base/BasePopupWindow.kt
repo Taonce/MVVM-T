@@ -14,7 +14,7 @@ import kotlinx.coroutines.cancel
 
 /**
  * @author Taonce.
- * @description
+ * @description PopupWindow基类
  */
 @Suppress("LeakingThis")
 abstract class BasePopupWindow<VB : ViewBinding>(
