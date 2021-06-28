@@ -13,7 +13,7 @@ private const val COROUTINES_TAG = "CoroutinesUtils"
 
 private val exceptionHandler: CoroutineExceptionHandler =
     CoroutineExceptionHandler { _, throwable ->
-        showThrowable(COROUTINES_TAG, "coroutines Exception", throwable)
+        showThrowable("coroutines Exception", throwable, COROUTINES_TAG)
     }
 
 private val handlerContext: CoroutineContext = exceptionHandler

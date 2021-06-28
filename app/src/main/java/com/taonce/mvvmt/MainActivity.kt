@@ -1,5 +1,6 @@
 package com.taonce.mvvmt
 
+import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -32,10 +33,10 @@ class MainActivity : BaseListActivity<ActivityMainBinding, MainAdapter>() {
 
     override fun getItemClickListener() =
         OnItemClickListener { _, _ ->
-            showSnackBar(
-                view = mRootView,
-                msg = "show snack bar",
-                actionMsg = "dismiss"
+            mRootView.showCustomSnackBar(
+                "show custom snack bar",
+                "dismiss",
+                Color.WHITE, Color.BLACK
             ) { showDebug("clickSnackBar", tag = TAG) }
         }
 

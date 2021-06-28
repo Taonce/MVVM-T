@@ -1,52 +1,59 @@
 package com.taonce.mvvm.util
 
+import android.graphics.Color
 import android.view.View
 import com.google.android.material.snackbar.Snackbar
 
 /**
- * 显示SnackBar
+ * 显示[Snackbar]
  *
- * @param view rootView
  * @param msg 显示内容
  * @param duration 时长
  * @param actionMsg 按钮内容
  * @param action 按钮事件
  */
-fun showSnackBar(
-    view: View,
+fun View.showSnackBar(
     msg: String,
     duration: Int = Snackbar.LENGTH_SHORT,
     actionMsg: String,
     action: () -> Unit
 ) {
-    Snackbar.make(view, msg, duration).setAction(actionMsg) { action() }.show()
+    Snackbar.make(this, msg, duration).setAction(actionMsg) { action() }.show()
 }
 
 /**
- * 长时间显示SnackBar
+ * 长时间显示[Snackbar]
  *
- * @param view rootView
  * @param msg 显示内容
  * @param actionMsg 按钮内容
  * @param action 按钮事件
  */
-fun showSnackBarLong(
-    view: View,
+fun View.showSnackBarLong(
     msg: String,
     actionMsg: String,
     action: () -> Unit
 ) {
-    Snackbar.make(view, msg, Snackbar.LENGTH_LONG).setAction(actionMsg) { action() }.show()
+    Snackbar.make(this, msg, Snackbar.LENGTH_LONG).setAction(actionMsg) { action() }.show()
 }
 
-fun showCustomSnackBar(
-    view: View,
+/**
+ * 自定义[Snackbar]
+ *
+ * @param msg 显示内容
+ * @param actionMsg 按钮内容
+ * @param actionTextColor 按钮文字颜色
+ * @param backgroundColor 背景颜色
+ * @param action 按钮事件
+ */
+fun View.showCustomSnackBar(
     msg: String,
     actionMsg: String,
     actionTextColor: Int,
+    backgroundColor: Int = Color.WHITE,
     action: () -> Unit
 ) {
-    Snackbar.make(view, msg, Snackbar.LENGTH_LONG).apply {
+    Snackbar.make(this, msg, Snackbar.LENGTH_LONG).apply {
+        view.setBackgroundColor(backgroundColor)
         setAction(actionMsg) { action() }
         setActionTextColor(actionTextColor)
         show()
