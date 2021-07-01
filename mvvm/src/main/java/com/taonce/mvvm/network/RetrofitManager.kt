@@ -7,23 +7,19 @@ import retrofit2.converter.gson.GsonConverterFactory
  * @author Taonce.
  * @description
  */
-class RetrofitManager {
-    companion object {
-        val getApi: ApiServices by lazy(mode = LazyThreadSafetyMode.SYNCHRONIZED) {
-            RetrofitManager().getRetrofit().create(ApiServices::class.java)
-        }
-        // 配置base_url
-        const val BASE_URL = ""
-    }
+object RetrofitManager {
+    // 配置base_url
+    private const val BASE_URL = ""
 
     private var mRetrofit: Retrofit? = null
+
     private val mOkHttpClient by lazy { OkHttpManager.mInstance.getHttpClient() }
 
     // 配置Retrofit
-    private fun getRetrofit(): Retrofit {
+    private fun getRetrofit(baseUrl: String = BASE_URL): Retrofit {
         if (mRetrofit == null) {
             mRetrofit = Retrofit.Builder()
-                .baseUrl(BASE_URL)
+                .baseUrl(baseUrl)
                 .addConverterFactory(GsonConverterFactory.create())
                 .client(mOkHttpClient)
                 .build()
@@ -31,4 +27,6 @@ class RetrofitManager {
         return mRetrofit!!
     }
 
+    fun <T : ApiServices> getApi(servicesClass: Class<T>, baseUrl: String = BASE_URL): Class<T> =
+        getRetrofit(baseUrl).create(servicesClass::class.java)
 }

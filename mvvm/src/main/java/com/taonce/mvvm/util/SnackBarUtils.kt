@@ -2,6 +2,7 @@ package com.taonce.mvvm.util
 
 import android.graphics.Color
 import android.view.View
+import androidx.annotation.ColorInt
 import com.google.android.material.snackbar.Snackbar
 
 /**
@@ -48,8 +49,8 @@ fun View.showSnackBarLong(
 fun View.showCustomSnackBar(
     msg: String,
     actionMsg: String,
-    actionTextColor: Int,
-    backgroundColor: Int = Color.WHITE,
+    @ColorInt actionTextColor: Int,
+    @ColorInt backgroundColor: Int = Color.WHITE,
     action: () -> Unit
 ) {
     Snackbar.make(this, msg, Snackbar.LENGTH_LONG).apply {
