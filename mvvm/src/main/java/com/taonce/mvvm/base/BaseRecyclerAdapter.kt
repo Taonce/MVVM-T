@@ -11,7 +11,7 @@ import androidx.viewbinding.ViewBinding
  * Desc: [RecyclerView]的Adapter封装，结合的是DataBinding
  */
 abstract class BaseRecyclerAdapter<VB : ViewBinding, T>(
-    private val mData: MutableList<T>? = null
+    private val mData: MutableList<T> = mutableListOf()
 ) : RecyclerView.Adapter<BaseRecyclerHolder<VB>>() {
 
     private var mClickListener: OnItemClickListener? = null
@@ -44,9 +44,9 @@ abstract class BaseRecyclerAdapter<VB : ViewBinding, T>(
     /**
      * 获取item数据，有可能为空
      */
-    fun getItemData(position: Int) = mData?.get(position)
+    fun getItemData(position: Int) = mData[position]
 
-    override fun getItemCount(): Int = mData?.size ?: 0
+    override fun getItemCount(): Int = mData.size
 
     abstract fun getViewBinding(parent: ViewGroup): VB
 
@@ -64,14 +64,13 @@ abstract class BaseRecyclerAdapter<VB : ViewBinding, T>(
      * 移除指定的item
      */
     fun removeItem(position: Int) {
-        if (position in 0 until itemCount)
-            mData?.let {
-                it.removeAt(position)
-                notifyItemRemoved(position)
-                if (position != itemCount) {
-                    notifyItemRangeChanged(position, itemCount - position)
-                }
+        if (position in 0 until itemCount) {
+            mData.removeAt(position)
+            notifyItemRemoved(position)
+            if (position != itemCount) {
+                notifyItemRangeChanged(position, itemCount - position)
             }
+        }
     }
 
     /**
@@ -79,12 +78,10 @@ abstract class BaseRecyclerAdapter<VB : ViewBinding, T>(
      */
     fun addItem(position: Int, data: T) {
         if (position in 0..itemCount) {
-            mData?.let {
-                it.add(position, data)
-                notifyItemInserted(position)
-                if (position != itemCount) {
-                    notifyItemRangeChanged(position, itemCount - position)
-                }
+            mData.add(position, data)
+            notifyItemInserted(position)
+            if (position != itemCount) {
+                notifyItemRangeChanged(position, itemCount - position)
             }
         }
     }
@@ -93,10 +90,8 @@ abstract class BaseRecyclerAdapter<VB : ViewBinding, T>(
      * 列表末尾插入多条数据
      */
     fun add(newData: MutableList<T>) {
-        mData?.let {
-            it.addAll(newData)
-            notifyItemRangeInserted(itemCount, newData.size)
-        }
+        mData.addAll(newData)
+        notifyItemRangeInserted(itemCount, newData.size)
     }
 
     fun setOnClickListener(listener: OnItemClickListener?) {
