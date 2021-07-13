@@ -25,7 +25,7 @@ fun String.isNumAll(): Boolean {
  * 验证字符串是否符合手机号规则
  */
 fun String.isPhoneNum(): Boolean {
-    val rule = "^((13[0-9])|(14[5,7,9])|(15[^4])|(18[0-9])|(17[0,1,3,5,6,7,8]))\\d{8}$"
+    val rule = "^(13[0-9]|14[01456879]|15[0-35-9]|16[2567]|17[0-8]|18[0-9]|19[0-35-9])\\d{8}\$"
     return (!this.isEmpty() && this.matches(Regex(rule)))
 }
 
