@@ -27,6 +27,6 @@ object RetrofitManager {
         return mRetrofit!!
     }
 
-    fun <T : ApiServices> getApi(servicesClass: Class<T>, baseUrl: String = BASE_URL): Class<T> =
-        getRetrofit(baseUrl).create(servicesClass::class.java)
+    fun <T : ApiServices> getApi(servicesClass: Class<T>, baseUrl: String = BASE_URL): T =
+        getRetrofit(baseUrl).create(servicesClass) as T
 }
