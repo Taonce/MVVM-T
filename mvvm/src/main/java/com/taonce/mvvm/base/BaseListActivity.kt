@@ -13,9 +13,9 @@ import androidx.viewbinding.ViewBinding
 abstract class BaseListActivity<vb : ViewBinding, A : BaseRecyclerAdapter<*, *>> :
     BaseActivity<vb>() {
 
-    protected val mAdapter: A by lazy { getAdapter() }
+    protected val adapter: A by lazy { getRecycleAdapter() }
 
-    abstract fun getAdapter(): A
+    abstract fun getRecycleAdapter(): A
 
     open fun getItemClickListener(): OnItemClickListener? = null
 
@@ -24,8 +24,8 @@ abstract class BaseListActivity<vb : ViewBinding, A : BaseRecyclerAdapter<*, *>>
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         // 省去具体界面再去绑定的操作
-        mAdapter.setOnClickListener(getItemClickListener())
-        mAdapter.setOnLongClickListener(getItemLongClickListener())
+        adapter.setOnClickListener(getItemClickListener())
+        adapter.setOnLongClickListener(getItemLongClickListener())
     }
 }
 

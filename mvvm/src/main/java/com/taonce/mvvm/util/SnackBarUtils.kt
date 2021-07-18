@@ -16,8 +16,8 @@ import com.google.android.material.snackbar.Snackbar
 fun View.showSnackBar(
     msg: String,
     duration: Int = Snackbar.LENGTH_SHORT,
-    actionMsg: String,
-    action: () -> Unit
+    actionMsg: String = "",
+    action: () -> Unit = {}
 ) {
     Snackbar.make(this, msg, duration).setAction(actionMsg) { action() }.show()
 }
@@ -31,8 +31,8 @@ fun View.showSnackBar(
  */
 fun View.showSnackBarLong(
     msg: String,
-    actionMsg: String,
-    action: () -> Unit
+    actionMsg: String = "",
+    action: () -> Unit = {}
 ) {
     Snackbar.make(this, msg, Snackbar.LENGTH_LONG).setAction(actionMsg) { action() }.show()
 }
@@ -48,10 +48,10 @@ fun View.showSnackBarLong(
  */
 fun View.showCustomSnackBar(
     msg: String,
-    actionMsg: String,
+    actionMsg: String = "",
     @ColorInt actionTextColor: Int,
     @ColorInt backgroundColor: Int = Color.WHITE,
-    action: () -> Unit
+    action: () -> Unit = {}
 ) {
     Snackbar.make(this, msg, Snackbar.LENGTH_LONG).apply {
         view.setBackgroundColor(backgroundColor)

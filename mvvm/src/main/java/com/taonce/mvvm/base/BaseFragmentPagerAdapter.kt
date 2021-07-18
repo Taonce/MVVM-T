@@ -2,7 +2,7 @@ package com.taonce.mvvm.base
 
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
-import androidx.fragment.app.FragmentPagerAdapter
+import androidx.fragment.app.FragmentStatePagerAdapter
 
 /**
  * @author: Taonce
@@ -13,7 +13,8 @@ class BaseFragmentPagerAdapter(
     private val fragments: List<Fragment>,
     private val titles: List<String>? = null,
     behavior: Int = 0
-) : FragmentPagerAdapter(fm, behavior) {
+) : FragmentStatePagerAdapter(fm, behavior) {
+
     override fun getItem(position: Int) = fragments[position]
 
     override fun getCount() = fragments.size

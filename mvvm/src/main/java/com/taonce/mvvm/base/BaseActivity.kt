@@ -57,8 +57,8 @@ abstract class BaseActivity<VB : ViewBinding> : AppCompatActivity(), CoroutineSc
 
     override fun onCreate(savedInstanceState: Bundle?) {
         showDebug(msg = "activity create start")
-        super.onCreate(savedInstanceState)
         preCreate()
+        super.onCreate(savedInstanceState)
         ActivityStackManager.addActivity(this)
         showOrHideToolBar()
         mRootView = mViewBinding.root

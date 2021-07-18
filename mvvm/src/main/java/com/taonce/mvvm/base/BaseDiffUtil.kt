@@ -8,8 +8,8 @@ import androidx.recyclerview.widget.DiffUtil
  *              并且需要重写的两个方法默认进行了非空判断
  */
 abstract class BaseDiffUtil<T>(
-    private val oldData: MutableList<T>?,
-    private val newData: MutableList<T>?
+    private val oldData: List<T>?,
+    private val newData: List<T>?
 ) : DiffUtil.Callback() {
     override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int) =
         if (oldData.isNullOrEmpty() || newData.isNullOrEmpty()) false

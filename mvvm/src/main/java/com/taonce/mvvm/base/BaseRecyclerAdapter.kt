@@ -89,7 +89,7 @@ abstract class BaseRecyclerAdapter<VB : ViewBinding, T>(
     /**
      * 列表末尾插入多条数据
      */
-    fun add(newData: MutableList<T>) {
+    fun add(newData: List<T>) {
         mData.addAll(newData)
         notifyItemRangeInserted(itemCount, newData.size)
     }

@@ -22,25 +22,35 @@ abstract class BaseFragment<VB : ViewBinding> : Fragment(), CoroutineScope by Ma
     /**
      * ViewBinding
      */
-    protected val mViewBinding: VB by lazy { getViewBinding() }
+    protected val viewBinding: VB by lazy { getVB() }
 
-    protected lateinit var mRootView: View
+    protected var rootView: View? = null
+
+    /**
+     * 判断是否初始化View
+     */
+    private var isViewInit = false
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        mRootView = mViewBinding.root
-        return mRootView
+        if (rootView == null) {
+            rootView = viewBinding.root
+        }
+        return rootView
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        work(view, savedInstanceState)
+        if (!isViewInit) {
+            super.onViewCreated(view, savedInstanceState)
+            work(view, savedInstanceState)
+            isViewInit = true
+        }
     }
 
-    abstract fun getViewBinding(): VB
+    abstract fun getVB(): VB
 
     abstract fun work(view: View, savedInstanceState: Bundle?)
 

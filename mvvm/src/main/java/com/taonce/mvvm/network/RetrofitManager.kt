@@ -13,16 +13,28 @@ object RetrofitManager {
 
     private var mRetrofit: Retrofit? = null
 
+    private val retrofitList: Map<String, Retrofit> = mutableMapOf()
+
     private val mOkHttpClient by lazy { OkHttpManager.mInstance.getHttpClient() }
 
     // 配置Retrofit
     private fun getRetrofit(baseUrl: String = BASE_URL): Retrofit {
-        if (mRetrofit == null) {
+        if (retrofitList.isEmpty()) {
             mRetrofit = Retrofit.Builder()
                 .baseUrl(baseUrl)
                 .addConverterFactory(GsonConverterFactory.create())
                 .client(mOkHttpClient)
                 .build()
+        } else {
+            mRetrofit = if (retrofitList.containsKey(baseUrl)) {
+                retrofitList[baseUrl]
+            } else {
+                Retrofit.Builder()
+                    .baseUrl(baseUrl)
+                    .addConverterFactory(GsonConverterFactory.create())
+                    .client(mOkHttpClient)
+                    .build()
+            }
         }
         return mRetrofit!!
     }

@@ -2,16 +2,14 @@ package com.taonce.mvvm.base
 
 import android.os.Bundle
 import android.view.View
-import androidx.fragment.app.Fragment
 import androidx.viewbinding.ViewBinding
 
-
 /**
- * @author Taonce
- * @description 带列表的[Fragment]
- * 单击和长按事件如果没设置的话直接返回null
+ * @author tao.
+ * @description
+ * @date 2021/7/8
  */
-abstract class BaseListFragment<vb : ViewBinding, A : BaseRecyclerAdapter<*, *>>
+abstract class BaseMultiListFragment<vb : ViewBinding, A : BaseMultiRecyclerAdapter<*>>
     : BaseFragment<vb>() {
 
     protected val adapter by lazy { getRecyclerAdapter() }
@@ -28,4 +26,3 @@ abstract class BaseListFragment<vb : ViewBinding, A : BaseRecyclerAdapter<*, *>>
         adapter.setOnLongClickListener(getItemLongClickListener())
     }
 }
-

@@ -69,7 +69,7 @@ fun String.toLowerCase(
         && !this.isEmpty()
     ) this.replaceFirst(
         subString,
-        subString.toLowerCase(Locale.getDefault())
+        subString.lowercase(Locale.getDefault())
     ) else ""
 }
 
